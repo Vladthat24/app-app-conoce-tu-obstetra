@@ -2,11 +2,11 @@
     /*     @import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"); */
 
     .login-block {
-        background: #DE6262;
+        /* background: #DE6262; */
         /* fallback for old browsers */
         background: -webkit-linear-gradient(to bottom, #FFB88C, #DE6262);
         /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to bottom, #FFB88C, #DE6262);
+        /*  background: linear-gradient(to bottom, #FFB88C, #DE6262); */
         /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         float: left;
         width: 100%;
@@ -27,14 +27,15 @@
         box-shadow: 15px 20px 0px rgba(0, 0, 0, 0.1);
     }
 
-    /*     .carousel-inner {
+    /* 
+         .carousel-inner {
         border-radius: 0 10px 10px 0;
     }
-
-    .carousel-caption {
+ */
+    /*     .carousel-caption {
         text-align: left;
         left: 5%;
-    } */
+    }  */
 
     .login-sec {
         padding: 50px 30px;
@@ -108,13 +109,13 @@
         color: #fff;
     }
 </style>
-<section class="login-block" style="background-color: black;">
+<section class="login-block">
     <div class="container">
         <div class="row">
             <div class="col-md-4 login-sec">
                 <h2 class="text-center">Habilidad en Línea</h2>
-                
-                <form class="login-form">
+
+                <form class="login-form" role="form" method="post" enctype="multipart/form-data" action="verconstancia">
                     <?php
                     $cop = $_SESSION["idobstetra"];
                     $item = 'idobstetra';
@@ -157,33 +158,43 @@
 
                     ?>
                     <div class="form-group">
-                        <label for="exampleInputEmail1" class="text-uppercase" style="font-size: 15px;color: #81172D;">Cop:</label>
+                        <label for="exampleInputEmail1" class="text-uppercase" style="font-size: 15px;color: #DE6262;">Cop:</label>
                         <label for="exampleInputEmail1" class="text-uppercase" style="font-size: 25px;margin-left: 15px;"><?php echo $n_cop; ?></label>
-
+                        <input type="text" class="hidden" name="cop" value="<?php echo $n_cop; ?>">
 
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1" class="text-uppercase" style="font-size: 15px;color: #81172D;">Nombres:</label>
+                        <label for="exampleInputEmail1" class="text-uppercase" style="font-size: 15px;color: #DE6262;">Nombres:</label>
                         <label for="exampleInputEmail1" class="text-uppercase" style="font-size: 20px;margin-left: 15px;"><?php echo $nombre; ?></label>
+
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1" class="text-uppercase" style="font-size: 15px;color: #81172D;">Apellidos:</label>
+                        <label for="exampleInputEmail1" class="text-uppercase" style="font-size: 15px;color: #DE6262;">Apellidos:</label>
                         <label for="exampleInputEmail1" class="text-uppercase" style="font-size: 20px;margin-left: 15px;"><?php echo $apellidos; ?></label>
+
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1" class="text-uppercase" style="font-size: 15px;color: #81172D;">Estado:</label>
+                        <label for="exampleInputEmail1" class="text-uppercase" style="font-size: 15px;color: #DE6262;">Estado:</label>
                         <label for="exampleInputEmail1" class="text-uppercase" style="font-size: 20px;margin-left: 15px;"><?php echo $estado; ?></label>
+
                     </div>
 
 
                     <div class="form-check">
-                        <button type="submit" class="btn btn-login" style="margin-left: 60px;">Ver Constancia Habilidad</button>
+                        <button type="submit" class="btn btn-login btn-lg" style="margin-left: 60px;margin-top: 20px;">Ver Constancia Habilidad</button>
                     </div>
+
+
 
                 </form>
                 <div class="copy-text">Colegio de Obstetras del Perú</i> -<a href="http://colegiodeobstetras.pe/"> Web</a></div>
+
+                <div class="form-check">
+                    <a href="salir" class="btn btn-login" style="margin-left: 120px;margin-top: 50px;">Salir</a>
+                </div>
+
             </div>
             <div class="col-md-8 banner-sec">
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -196,27 +207,23 @@
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                         <div class="item active">
-                            <img src="https://images.pexels.com/photos/7097/people-coffee-tea-meeting.jpg" alt="Los Angeles" style="width:100%;">
+                            <img src="vistas/img/plantilla/fotomenuinicio.jpg" alt="Los Angeles" style="width:95.5%;;margin:70px 30px;">
                         </div>
 
                         <div class="item">
-                            <img src="https://images.pexels.com/photos/7097/people-coffee-tea-meeting.jpg" alt="Chicago" style="width:100%;">
-                        </div>
-
-                        <div class="item">
-                            <img src="https://images.pexels.com/photos/872957/pexels-photo-872957.jpeg" alt="New york" style="width:100%;">
+                            <img src="vistas/img/plantilla/inicio_quienessomos.jpg" alt="Chicago" style="width:93%;;margin:70px 30px;">
                         </div>
                     </div>
 
                     <!-- Left and right controls -->
-                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                    <!--                     <a class="left carousel-control" href="#myCarousel" data-slide="prev">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                         <span class="sr-only">Previous</span>
                     </a>
                     <a class="right carousel-control" href="#myCarousel" data-slide="next">
                         <span class="glyphicon glyphicon-chevron-right"></span>
                         <span class="sr-only">Next</span>
-                    </a>
+                    </a> -->
 
                 </div>
             </div>

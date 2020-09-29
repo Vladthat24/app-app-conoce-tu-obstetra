@@ -134,6 +134,200 @@ class ControladorRegistro
     return $respuesta;
   }
 
+  public function createRandomCode()
+  {
+    $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789";
+    srand((float)microtime() * 1000000);
+    $i = 0;
+    $pass = '';
+
+    while ($i <= 7) {
+      $num = rand() % 33;
+      $tmp = substr($chars, $num, 1);
+      $pass = $pass . $tmp;
+      $i++;
+    }
+
+    return time() . $pass;
+  }
+
+  static public function ctrEnviarCorreo()
+  {
+    if (isset($_POST["cop"]) && isset($_POST["email"]) && trim($_POST["email"]) != "") {
+      $cop = $_POST["cop"];
+      $email = $_POST["email"];
+
+      $codigo = new ControladorRegistro();
+      $co = $codigo->createRandomCode();
+      date_default_timezone_set('America/Lima');
+
+      $fecha = date('Y-m-d');
+      $hora = date('H:i:s');
+
+      $fechaRecuperacion = date('Y-m-d H:i:s', strtotime('+24 hours'));
+      $tabla = "habilidad";
+      $item = "email";
+      $valor = $email;
+      $registro = ModeloRegistro::mdlRecuperarEmail($tabla, $item, $valor);
+
+      if (isset($registro["email"])) {
+
+        $datos = array(
+          "email" => $email,
+          "codigo" => $co,
+          "fecharecuperacion" => $fechaRecuperacion
+        );
+
+        $updateCodeandFechaRecu = ModeloRegistro::mdlEditarCodeFecRecp($tabla, $datos);
+        if ($updateCodeandFechaRecu == "ok") {
+
+          /* =============================================
+              CORREOS DONDE SE ENVIARA EL FORMULARIO
+            ============================================= */
+          $emailTo = array('libroreclamaciones_envio@dirislimasur.gob.pe', $correoLigitimado, $correoUsuario);
+          /* =============================================
+              CONFIGURACION DEL PHPMAILER 
+            ============================================= */
+          $subject = "LIBRO DE RECLAMACIONES - DIRIS LIMA SUR";
+          $message = "<html>";
+
+          $template = file_get_contents('vistas/modulos/template.php');
+          $template = str_replace("{{name}}", $nombre, $template);
+          $template = str_replace("{{action_url_2}}", '<b>http:' . URL . 'login/newPassword/' . $codigo . '</b>', $template);
+          $template = str_replace("{{action_url_1}}", 'http:' . URL . 'login/newPassword/' . $codigo, $template);
+          $template = str_replace("{{year}}", date('Y'), $template);
+          $template = str_replace("{{operating_system}}", Helper::getOS(), $template);
+          $template = str_replace("{{browser_name}}", Helper::getBrowser(), $template);
+
+
+
+
+          $EnviadoPor = "ymendieta@dirislimasur.gob.pe";
+          $NombreEnviado = "LIBRO DE RECLAMACIONES VIRUTAL";
+          $host = "smtp.gmail.com";
+          $port = 587;
+          $SMTPAuth = true;
+          $SMTSecure = "tls";
+          $password = "1597531994Vlad";
+
+          require "vistas/bower_components/PHPMailer/PHPMailerAutoload.php";
+
+          $mail = new PHPMailer();
+
+          $mail->isSMTP();
+
+
+          $mail->SMTPDebug = 0;
+          $mail->Host = $host;
+          $mail->Port = $port;
+          $mail->SMTPAuth = $SMTPAuth;
+          $mail->SMTPSecure = $SMTSecure;
+          $mail->Username = $EnviadoPor;
+          $mail->Password = $password;
+
+          $mail->setFrom($EnviadoPor, $NombreEnviado);
+
+          if (is_array($emailTo)) {
+            foreach ($emailTo as $key => $value) {
+              $mail->addAddress($value);
+            }
+          } else {
+            $mail->addAddress($emailTo);
+          }
+          /* $mail->addAddress($emailTo); */
+
+
+          $mail->isHTML(true);
+          $mail->Subject = $subject;
+
+          $mail->Body = $message;
+
+          if (!$mail->send()) {
+
+            echo '<script>console.log("ERROR AL ENVIAR MENSAJE");</script>';
+          }
+          echo '<script>console.log("MENSAJE ENVIADO");</script>';
+
+          if ($respuesta == "ok") {
+
+            echo '<script>
+
+					swal({
+
+						type: "success",
+						title: "¡El Reclamo N°- 0' . $num_reclamo . ' ha sido Generado!",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+
+					}).then(function(result){
+
+						if(result.value){
+						
+							window.location = "https://libroreclamaciones.dirislimasur.gob.pe/";
+
+						}
+
+					});
+				
+
+					</script>';
+          } else {
+            echo '<script>
+
+					swal({
+
+						type: "success",
+						title: "¡Error, Contactar con el Administrador!",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+
+					}).then(function(result){
+
+
+					});
+				
+
+					</script>';
+          }
+        } else {
+          echo '<script>
+ 
+          swal({
+              type: "error",
+              title: "Error al enviar correo, Contactar con el Administrador",
+              showConfirmButton: true,
+              confirmButtonText: "Cerrar"
+              }).then((result) => {
+              if (result.value) {
+  
+              window.location = "restablecer";
+  
+              }
+            })
+  
+          </script>';
+        }
+      } else {
+        echo '<script>
+ 
+        swal({
+            type: "error",
+            title: "El correo electrónico no se encuentra registrado",
+            showConfirmButton: true,
+            confirmButtonText: "Cerrar"
+            }).then((result) => {
+            if (result.value) {
+
+            window.location = "restablecer";
+
+            }
+          })
+
+        </script>';
+      }
+    }
+  }
+
   /* =============================================
       CREAR REGISTRO
    ============================================= */

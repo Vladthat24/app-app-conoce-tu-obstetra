@@ -394,11 +394,11 @@
         background-color: #81172D;
         border-radius: 25px;
 
-        box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
-        -moz-box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
-        -webkit-box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
-        -o-box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
-        -ms-box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
+        box-shadow: 0 10px 30px 0px rgba(129, 23, 45, 0.5);
+        -moz-box-shadow: 0 10px 30px 0px rgba(129, 23, 45, 0.5);
+        -webkit-box-shadow: 0 10px 30px 0px rgba(129, 23, 45, 0.5);
+        -o-box-shadow: 0 10px 30px 0px rgba(129, 23, 45, 0.5);
+        -ms-box-shadow: 0 10px 30px 0px rgba(129, 23, 45, 0.5);
 
         -webkit-transition: all 0.4s;
         -o-transition: all 0.4s;
@@ -517,11 +517,11 @@
 
         <div class="wrap-login100 p-t-85 p-b-20">
 
-            <span class="login100-form-title p-b-30" style="font-size: 35px;font-family: monospace;text-align: center;margin-bottom: 50px;">
-                <strong>Habilidad en Línea</strong>
+            <span class="login100-form-title p-b-30" style="font-size: 35px;font-family: monospace;text-align: center;margin-bottom: 10px;">
+                <strong>Restablecer Constraseña</strong>
             </span>
 
-            <form class="login100-form validate-form">
+            <form class="login100-form validate-form" role="form" method="post" enctype="multipart/form-data">
 
                 <span class="login100-form-title p-b-70">
                     <img src="vistas/img/plantilla/logo_blanco_obstetras_iam_gif.gif" class="img-responsive" width="450px;">
@@ -530,55 +530,113 @@
                     <!--  <img src="vistas/img/plantilla/logo_blanco_obstetras_iam_gif.gif" class="img-responsive" width="200px"> -->
                 </span>
 
-                <div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate="Enter username">
-                    <input class="input100" type="text" name="username">
+                <div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate="Ingrese COP">
+                    <input class="input100" type="text" name="cop">
                     <span class="focus-input100" data-placeholder="COP"></span>
                 </div>
                 <br>
-                <div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
-                    <input class="input100" type="password" name="pass">
-                    <span class="focus-input100" data-placeholder="CONTRASEÑA"></span>
+                <div class="wrap-input100 validate-input m-b-50" data-validate="Ingrese Correo">
+                    <input class="input100" type="email" name="email">
+                    <span class="focus-input100" data-placeholder="CORREO"></span>
                 </div>
                 <br>
                 <br>
-                <div class="container-login100-form-btn">
-                    <button class="login100-form-btn">
-                        Cambiar Contraseña
-                    </button>
-                </div>
+                <button class="login100-form-btn" type="submit">
+                    CAMBIAR CONTRASEÑA
+                </button>
                 <br>
                 <br>
-                <ul class="login-more p-t-150" style="margin-top: 70px;">
+                <ul class="login-more p-t-150" style="margin-top: 25px;">
                     <li class="m-b-8">
                         <span class="txt1">
-                            ¿Olvidó su
-                            <a href="restablecer" class="txt2">
-                                Contraseña?
+
+                            <a href="login" class="txt2">
+                                Regresar
                             </a>
 
                         </span>
 
 
                     </li>
-
-                    <li>
-                        <span class="txt1">
-                            ¿No puede Ingresar?
-
-                        </span>
-                        <a href="registrar" class="txt2">
-                            Registrese
-                        </a>
-
-                    </li>
                 </ul>
 
                 <?php
-                $login = new ControladorUsuarios();
-                $login->ctrIngresoUsuario();
+                $restablecer = new ControladorRegistro();
+                $restablecer->ctrEnviarCorreo();
                 ?>
 
             </form>
         </div>
     </div>
+    <div id="dropDownSelect1"></div>
 </div>
+
+<script>
+    (function($) {
+        "use strict";
+
+
+        /*==================================================================
+        [ Focus input ]*/
+        $('.input100').each(function() {
+            $(this).on('blur', function() {
+                if ($(this).val().trim() != "") {
+                    $(this).addClass('has-val');
+                } else {
+                    $(this).removeClass('has-val');
+                }
+            })
+        })
+
+
+        /*==================================================================
+        [ Validate ]*/
+        var input = $('.validate-input .input100');
+
+        $('.validate-form').on('submit', function() {
+            var check = true;
+
+            for (var i = 0; i < input.length; i++) {
+                if (validate(input[i]) == false) {
+                    showValidate(input[i]);
+                    check = false;
+                }
+            }
+
+            return check;
+        });
+
+
+        $('.validate-form .input100').each(function() {
+            $(this).focus(function() {
+                hideValidate(this);
+            });
+        });
+
+        function validate(input) {
+            if ($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
+                if ($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
+                    return false;
+                }
+            } else {
+                if ($(input).val().trim() == '') {
+                    return false;
+                }
+            }
+        }
+
+        function showValidate(input) {
+            var thisAlert = $(input).parent();
+
+            $(thisAlert).addClass('alert-validate');
+        }
+
+        function hideValidate(input) {
+            var thisAlert = $(input).parent();
+
+            $(thisAlert).removeClass('alert-validate');
+        }
+
+
+    })(jQuery);
+</script>

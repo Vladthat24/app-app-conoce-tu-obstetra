@@ -2,6 +2,8 @@
 
 @session_start();
 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +17,7 @@
   <title>Colegio de Obstetras del Perú</title>
 
   <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!--   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> -->
   <link rel='stylesheet' id='hunted-style-css' href='vistas/bower_components/bootstrap/dist/css/style_pagina.css' type='text/css' media='all' />
   <link rel="icon" href="vistas/img/plantilla/icon_favicon.png">
 
@@ -150,6 +152,8 @@
 
       if (
         $_GET["ruta"] == "inicio" ||
+        $_GET["ruta"] == "verconstancia" ||
+        $_GET["ruta"] == "template" ||
         $_GET["ruta"] == "salir"
       ) {
 
@@ -160,7 +164,7 @@
       }
     } else {
 
-      include "modulos/404.php";
+      include "modulos/inicio.php";
     }
 
 
@@ -173,7 +177,7 @@
     echo '</div>';
   } else if (isset($_GET["ruta"])) {
 
-    if ($_GET["ruta"] == "login" || $_GET["ruta"] == "registro-obstetra") {
+    if ($_GET["ruta"] == "login" || $_GET["ruta"] == "registro-obstetra" || $_GET["ruta"] == "restablecer") {
 
       include "modulos/" . $_GET["ruta"] . ".php";
     }

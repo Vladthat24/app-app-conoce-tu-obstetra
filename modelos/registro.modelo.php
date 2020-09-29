@@ -36,6 +36,50 @@ class ModeloRegistro
         $stmt = null;
     }
 
+    static public function mdlRecuperarEmail($tabla, $item, $valor)
+    {
+
+        if ($item != null) {
+
+            $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY idhabilidad DESC");
+
+            $stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
+
+            $stmt->execute();
+
+            return $stmt->fetch();
+        } else {
+            echo "ERROR EN LA CONSULTA - CONTACTAR CON EL ADMINISTRADOR";
+        }
+
+        $stmt->close();
+
+        $stmt = null;
+    }
+
+
+    static public function mdlRecuperarPassword($tabla, $item, $valor)
+    {
+
+        if ($item != null) {
+
+            $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY idhabilidad DESC");
+
+            $stmt->bindParam(":" . $item, $valor, PDO::PARAM_INT);
+
+            $stmt->execute();
+
+            return $stmt->fetch();
+        } else {
+            echo "ERROR EN LA CONSULTA - CONTACTAR CON EL ADMINISTRADOR";
+        }
+
+        $stmt->close();
+
+        $stmt = null;
+    }
+
+
 
     /* =============================================
       MOSTRAR CONSULTA DE OBSTETRAS UNA VEZ INICIAR SESSION
@@ -147,6 +191,32 @@ class ModeloRegistro
         $stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
         $stmt->bindParam(":post_grado", $datos["post_grado"], PDO::PARAM_STR);
         $stmt->bindParam(":imagen", $datos["imagen"], PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+
+            return "ok";
+        } else {
+
+            return "error";
+        }
+
+        $stmt->close();
+        $stmt = null;
+    }
+
+    /* =============================================
+      EDITAR HABILIDAD
+      ============================================= */
+
+    static public function mdlEditarCodeFecRecp($tabla, $datos)
+    {
+
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET codigo=:codigo,
+          fecharecuperacion=:fecharecuperacion WHERE email = :email");
+
+        $stmt->bindParam(":email", $datos["email"], PDO::PARAM_STR);
+        $stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecharecuperacion", $datos["fecharecuperacion"], PDO::PARAM_STR);
 
         if ($stmt->execute()) {
 

@@ -2,22 +2,27 @@ actualizarActivo();
 /*=============================================
 LLAMAR AL DNI QUE ESTA ALMACENADO EN EL LOCALSTRORE
  =============================================*/
-$(document).ready(function () {
+$(document).ready(function() {
 
     /* 
         var dni = localStorage.getItem("dniLocalStore");
         $("#nuevDniVisitaFuncionario").val(dni);
     
         $("#nuevEntidadSelectSearch").select2(); */
+    $(".btnImprimirObstetra").on("click", function() {
 
+        var idObstetra = $(this).attr("idobstetra");
+        console.log(idObstetra);
+        window.open("extensiones/tcpdf/pdf/constanciahabilidad.php?idObstetra=" + idObstetra, "_blank");
+    })
 
 })
 
 /*=============================================
  VALIDAR SOLO NUMERO EN DNI
  =============================================*/
-$(function () {
-    $(".dni").keydown(function (event) {
+$(function() {
+    $(".dni").keydown(function(event) {
         //alert(event.keyCode);
         if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105) && event.keyCode !== 190 && event.keyCode !== 110 && event.keyCode !== 8 && event.keyCode !== 9) {
             return false;
@@ -29,8 +34,8 @@ $(function () {
 /*=============================================
  VALIDAR SOLO NUMERO EN COP
  =============================================*/
-$(function () {
-    $(".cop").keydown(function (event) {
+$(function() {
+    $(".cop").keydown(function(event) {
         //alert(event.keyCode);
         if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105) && event.keyCode !== 190 && event.keyCode !== 110 && event.keyCode !== 8 && event.keyCode !== 9) {
             return false;
@@ -41,9 +46,9 @@ $(function () {
 /*=============================================
  VALIDAR SOLO LETRAS
  =============================================*/
-$(function () {
+$(function() {
 
-    $("#nuevApellidoP").bind('keypress', function (event) {
+    $("#nuevApellidoP").bind('keypress', function(event) {
         var regex = new RegExp("^[a-zA-Z ]+$");
         var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
         if (!regex.test(key)) {
@@ -51,7 +56,7 @@ $(function () {
             return false;
         }
     });
-    $("#nuevApellidoM").bind('keypress', function (event) {
+    $("#nuevApellidoM").bind('keypress', function(event) {
         var regex = new RegExp("^[a-zA-Z ]+$");
         var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
         if (!regex.test(key)) {
@@ -59,7 +64,7 @@ $(function () {
             return false;
         }
     });
-    $("#nuevNombre").bind('keypress', function (event) {
+    $("#nuevNombre").bind('keypress', function(event) {
         var regex = new RegExp("^[a-zA-Z ]+$");
         var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
         if (!regex.test(key)) {
@@ -445,7 +450,7 @@ $('#editarHoraSalida').change(function () {
  EDITAR REGISTRO
  =============================================*/
 
-$(".tablas tbody").on("click", "button.btnVerConsulta", function () {
+$(".tablas tbody").on("click", "button.btnVerConsulta", function() {
 
     var idRegistro = $(this).attr("idRegistro");
     console.log("consulta", idRegistro);
@@ -461,7 +466,7 @@ $(".tablas tbody").on("click", "button.btnVerConsulta", function () {
         contentType: false,
         processData: false,
         dataType: "json",
-        success: function (respuesta) {
+        success: function(respuesta) {
 
             $('#editarIdRegistro').val(respuesta["cop"]);
             $('#editarApellidoPaterno').val(respuesta["apellido_paterno"]);
@@ -501,7 +506,7 @@ $(".tablas tbody").on("click", "button.btnVerConsulta", function () {
  EDITAR REGISTRO
  =============================================*/
 
-$(".tablaRegistro tbody").on("click", "button.btnEditarRegistro", function () {
+$(".tablaRegistro tbody").on("click", "button.btnEditarRegistro", function() {
 
     var idRegistro = $(this).attr("idRegistro");
 
@@ -517,7 +522,7 @@ $(".tablaRegistro tbody").on("click", "button.btnEditarRegistro", function () {
         contentType: false,
         processData: false,
         dataType: "json",
-        success: function (respuesta) {
+        success: function(respuesta) {
 
             $('#editarIdRegistro').val(respuesta["cop"]);
             $('#editarApellidoPaterno').val(respuesta["apellido_paterno"]);
@@ -548,7 +553,7 @@ $(".tablaRegistro tbody").on("click", "button.btnEditarRegistro", function () {
  SUBIENDO LA FOTO DEL TICKET
  =============================================*/
 
-$(".nuevaImagen").change(function () {
+$(".nuevaImagen").change(function() {
 
     var imagen = this.files[0];
 
@@ -583,7 +588,7 @@ $(".nuevaImagen").change(function () {
         var datosImagen = new FileReader;
         datosImagen.readAsDataURL(imagen);
 
-        $(datosImagen).on("load", function (event) {
+        $(datosImagen).on("load", function(event) {
 
             var rutaImagen = event.target.result;
 
@@ -599,7 +604,7 @@ $(".nuevaImagen").change(function () {
  ELIMINAR TICKET
  =============================================*/
 
-$(".tablaRegistro tbody").on("click", "button.btnEliminarRegistro", function () {
+$(".tablaRegistro tbody").on("click", "button.btnEliminarRegistro", function() {
 
     var idRegistro = $(this).attr("idRegistro");
     var imagen = $(this).attr("imagen");
@@ -614,7 +619,7 @@ $(".tablaRegistro tbody").on("click", "button.btnEliminarRegistro", function () 
         cancelButtonColor: '#d33',
         cancelButtonText: 'Cancelar',
         confirmButtonText: 'Si, borrar Registro!'
-    }).then(function (result) {
+    }).then(function(result) {
         if (result.value) {
 
             window.location = "index.php?ruta=registro&idRegistro=" + idRegistro + "&imagen=" + imagen;
@@ -629,13 +634,12 @@ $(".tablaRegistro tbody").on("click", "button.btnEliminarRegistro", function () 
 /*=============================================
  IMPRIMIR TICKET
  =============================================*/
-$(".tablaTicket").on("click", ".btnImprimirTicket", function () {
+/* $(".btnImprimirObstetra").on("click", function() {
 
-    var idTicket = $(this).attr("idTicket");
-
-    window.open("extensiones/tcpdf/pdf/printTicket.php?idTicket=" + idTicket, "_blank");
-}
-)
+    var idObstetra = $(this).attr("idobstetra");
+    console.log(idObstetra);
+    window.open("extensiones/tcpdf/pdf/printTicket.php?idTicket=" + idObstetra, "_blank");
+}) */
 
 /*=============================================
 MODAL PARA CREAR FUNCIONARIO DENTRO DEL MODAL DE REGISTRO
@@ -723,5 +727,3 @@ SELECCIONAR FUNCIONARIO DE LISTA
 
     })
 }) */
-
-

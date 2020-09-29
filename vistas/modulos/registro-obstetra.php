@@ -394,11 +394,11 @@
         background-color: #81172D;
         border-radius: 25px;
 
-        box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
-        -moz-box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
-        -webkit-box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
-        -o-box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
-        -ms-box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
+        box-shadow: 0 10px 30px 0px rgba(129, 23, 45, 0.5);
+        -moz-box-shadow: 0 10px 30px 0px rgba(129, 23, 45, 0.5);
+        -webkit-box-shadow: 0 10px 30px 0px rgba(129, 23, 45, 0.5);
+        -o-box-shadow: 0 10px 30px 0px rgba(129, 23, 45, 0.5);
+        -ms-box-shadow: 0 10px 30px 0px rgba(129, 23, 45, 0.5);
 
         -webkit-transition: all 0.4s;
         -o-transition: all 0.4s;
@@ -535,12 +535,12 @@
                     <strong>Registro</strong>
                 </span>
 
-                <div class="wrap-input100 validate-input m-t-85 m-b-35 cop" data-validate="Enter username" style="margin-bottom: 30px;">
+                <div class="wrap-input100 validate-input m-t-85 m-b-35 cop" data-validate="Ingrese COP" style="margin-bottom: 30px;">
                     <input class="input100" type="text" name="nuevCop" maxlength="6">
                     <span class="focus-input100" data-placeholder="N° COP"></span>
                 </div>
 
-                <div class="wrap-input100 validate-input m-t-85 m-b-35 dni" data-validate="Enter username" style="margin-bottom: 30px;">
+                <div class="wrap-input100 validate-input m-t-85 m-b-35 dni" data-validate="Ingrese DNI" style="margin-bottom: 30px;">
                     <input class="input100" type="text" maxlength="8" id="dni" name="dni">
 
                     <span class="focus-input100" data-placeholder="DOCUMENTO DE IDENTIDAD"></span>
@@ -549,32 +549,32 @@
                     </button>
                 </div>
 
-                <div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate="Enter username" style="margin-bottom: 30px;">
+                <div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate="Ingrese Apellido Paterno" style="margin-bottom: 30px;">
                     <input class="input100" type="text" id="nuevApellidoP" name="nuevApellidoP">
                     <span class="focus-input100" data-placeholder="APELLIDO PATERNO"></span>
                 </div>
                 <br>
-                <div class="wrap-input100 validate-input m-b-50" data-validate="Enter password" style="margin-bottom: 30px;">
+                <div class="wrap-input100 validate-input m-b-50" data-validate="Ingrese Apellido Materno" style="margin-bottom: 30px;">
                     <input class="input100" type="text" id="nuevApellidoM" name="nuevApellidoM">
                     <span class="focus-input100" data-placeholder="APELLIDO MATERNO"></span>
                 </div>
 
-                <div class="wrap-input100 validate-input m-b-50" data-validate="Enter password" style="margin-bottom: 30px;">
+                <div class="wrap-input100 validate-input m-b-50" data-validate="Ingrese Nombre" style="margin-bottom: 30px;">
                     <input class="input100" type="text" id="nuevNombre" name="nuevNombre">
                     <span class="focus-input100" data-placeholder="NOMBRES"></span>
                 </div>
 
-                <div class="wrap-input100 validate-input m-b-50" data-validate="Enter password" style="margin-bottom: 30px;">
+                <div class="wrap-input100 validate-input m-b-50" data-validate="Ingrese Email" style="margin-bottom: 30px;">
                     <input class="input100" type="emil" name="nuevEmail">
                     <span class="focus-input100" data-placeholder="CORREO ELECTRONICO"></span>
                 </div>
 
-                <div class="wrap-input100 validate-input m-b-50" data-validate="Enter password" style="margin-bottom: 30px;">
+                <div class="wrap-input100 validate-input m-b-50" data-validate="Ingrese Contraseña" style="margin-bottom: 30px;">
                     <input class="input100" type="password" name="nuevPassword">
                     <span class="focus-input100" data-placeholder="CONTRASEÑA"></span>
                 </div>
 
-                <div class="wrap-input100 validate-input m-b-50" data-validate="Enter password" style="margin-bottom: 30px;">
+                <div class="wrap-input100 validate-input m-b-50" data-validate="Ingrese Fecha Colegiatura" style="margin-bottom: 30px;">
                     <!-- <span class="focus-input100" data-placeholder="Fecha de Colegiatura"></span> -->
                     <input class="input100" type="date" name="nuevaFechaColegiatura">
                 </div>
