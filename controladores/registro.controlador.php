@@ -124,6 +124,22 @@ class ControladorRegistro
       ============================================= */
 
 
+  static public function ctrConsultaCodigo($valor)
+  {
+
+    $tabla = "habilidad";
+    $item = "codigo";
+
+    $respuesta = ModeloRegistro::mdlMostrarObstetraCodigo($tabla, $item, $valor);
+
+    return $respuesta;
+  }
+
+  /* =============================================
+    BUSCAR CODIGO UNICO SI EXITE EN EL REGISTRO DE LA OBSTETRA
+      ============================================= */
+
+
   static public function ctrMostrarObstetraInicio($item, $valor)
   {
 
@@ -134,6 +150,10 @@ class ControladorRegistro
     return $respuesta;
   }
 
+
+  /* =============================================
+     GENERAR CODIGO UNICO DE RECUPERACION
+      ============================================= */
   public function createRandomCode()
   {
     $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789";
@@ -150,25 +170,111 @@ class ControladorRegistro
 
     return time() . $pass;
   }
+  /* =============================================
+      OBTENER EL SISTEMA OPERATIVO DE DONDE SE ENVIO EL CORREO
+   ============================================= */
+  public static function getOS()
+  {
+    $user_agent = $_SERVER['HTTP_USER_AGENT'];
+
+    $os_platform  = "Unknown OS Platform";
+
+    $os_array     = array(
+      '/windows nt 10/i'      =>  'Windows 10',
+      '/windows nt 6.3/i'     =>  'Windows 8.1',
+      '/windows nt 6.2/i'     =>  'Windows 8',
+      '/windows nt 6.1/i'     =>  'Windows 7',
+      '/windows nt 6.0/i'     =>  'Windows Vista',
+      '/windows nt 5.2/i'     =>  'Windows Server 2003/XP x64',
+      '/windows nt 5.1/i'     =>  'Windows XP',
+      '/windows xp/i'         =>  'Windows XP',
+      '/windows nt 5.0/i'     =>  'Windows 2000',
+      '/windows me/i'         =>  'Windows ME',
+      '/win98/i'              =>  'Windows 98',
+      '/win95/i'              =>  'Windows 95',
+      '/win16/i'              =>  'Windows 3.11',
+      '/macintosh|mac os x/i' =>  'Mac OS X',
+      '/mac_powerpc/i'        =>  'Mac OS 9',
+      '/linux/i'              =>  'Linux',
+      '/ubuntu/i'             =>  'Ubuntu',
+      '/iphone/i'             =>  'iPhone',
+      '/ipod/i'               =>  'iPod',
+      '/ipad/i'               =>  'iPad',
+      '/android/i'            =>  'Android',
+      '/blackberry/i'         =>  'BlackBerry',
+      '/webos/i'              =>  'Mobile'
+    );
+
+    foreach ($os_array as $regex => $value) {
+      if (preg_match($regex, $user_agent)) {
+        $os_platform = $value;
+      }
+    }
+
+    return $os_platform;
+  }
+  /* =============================================
+      OBTENER EL NAVEGADOR DE DONDE SE ENVIO EL CORREO
+   ============================================= */
+  public static function getBrowser()
+  {
+    $user_agent = $_SERVER['HTTP_USER_AGENT'];
+
+    $browser        = "Unknown Browser";
+
+    $browser_array = array(
+      '/msie/i'      => 'Internet Explorer',
+      '/firefox/i'   => 'Firefox',
+      '/safari/i'    => 'Safari',
+      '/chrome/i'    => 'Chrome',
+      '/edge/i'      => 'Edge',
+      '/opera/i'     => 'Opera',
+      '/netscape/i'  => 'Netscape',
+      '/maxthon/i'   => 'Maxthon',
+      '/konqueror/i' => 'Konqueror',
+      '/mobile/i'    => 'Handheld Browser'
+    );
+
+    foreach ($browser_array as $regex => $value) {
+      if (preg_match($regex, $user_agent)) {
+        $browser = $value;
+      }
+    }
+
+    return $browser;
+  }
+
+  /* =============================================
+      ENVIAR CORREO
+   ============================================= */
 
   static public function ctrEnviarCorreo()
   {
+    //VALIDAD QUE LOS DATOS NO ESTEN VACIOS Y QUE EL CORREO NO LLEVE ESPACIOS ADELANTE
     if (isset($_POST["cop"]) && isset($_POST["email"]) && trim($_POST["email"]) != "") {
+
+      //RECUPERA DATOS POST
       $cop = $_POST["cop"];
       $email = $_POST["email"];
 
+      //GENERA CODIGO
       $codigo = new ControladorRegistro();
       $co = $codigo->createRandomCode();
       date_default_timezone_set('America/Lima');
-
-      $fecha = date('Y-m-d');
-      $hora = date('H:i:s');
-
+      $sistemaop = $codigo->getOS();
+      //CAPTURAMOS LA HORA Y LE SUMAMOS 24 HORAS PARA VALIDAR CADUCIDAD DEL CODIGO
       $fechaRecuperacion = date('Y-m-d H:i:s', strtotime('+24 hours'));
       $tabla = "habilidad";
       $item = "email";
       $valor = $email;
-      $registro = ModeloRegistro::mdlRecuperarEmail($tabla, $item, $valor);
+      $item2 = "idobstetra";
+      $valor2 = $cop;
+      $registro = ModeloRegistro::mdlRecuperarEmail($tabla, $item, $valor, $item2, $valor2);
+
+
+      /* =============================================
+         CAPTURAR LOS DATOS PARA REALIZAR UN UPDATE EN HABILIDAD
+      ============================================= */
 
       if (isset($registro["email"])) {
 
@@ -179,133 +285,86 @@ class ControladorRegistro
         );
 
         $updateCodeandFechaRecu = ModeloRegistro::mdlEditarCodeFecRecp($tabla, $datos);
+
         if ($updateCodeandFechaRecu == "ok") {
+
+          $tablaobstetra = "habilidad";
+          $itemobstetra = "cop";
+          $valorobstetra = $registro["idobstetra"];
+
+
+          $obstetra = ModeloRegistro::mdlMostrarObstetraInicio($tablaobstetra, $itemobstetra, $valorobstetra);
+
+
+          $nombre = $obstetra["nombre"];
+
 
           /* =============================================
               CORREOS DONDE SE ENVIARA EL FORMULARIO
             ============================================= */
-          $emailTo = array('libroreclamaciones_envio@dirislimasur.gob.pe', $correoLigitimado, $correoUsuario);
+
+          /*           $correoenviar = $receptorcorreo;
+          $emailTo = array('yosshimendieta94@gmail.com'); */
+
+
+          $destino = $email;
+
           /* =============================================
               CONFIGURACION DEL PHPMAILER 
             ============================================= */
-          $subject = "LIBRO DE RECLAMACIONES - DIRIS LIMA SUR";
-          $message = "<html>";
+          //NOTIFICACION POR CORREO
+          $asunto = "COLEGIO DE OBSTETRAS DEL PERÚ";
 
           $template = file_get_contents('vistas/modulos/template.php');
           $template = str_replace("{{name}}", $nombre, $template);
-          $template = str_replace("{{action_url_2}}", '<b>http:' . URL . 'login/newPassword/' . $codigo . '</b>', $template);
-          $template = str_replace("{{action_url_1}}", 'http:' . URL . 'login/newPassword/' . $codigo, $template);
+          $template = str_replace("{{action_url_2}}", '<b>http://localhost/app-constancia-obstetraV1.0/index.php?ruta=nuevPassword&codigo=' . $co . '</b>', $template);
+          $template = str_replace("{{action_url_1}}", 'http://localhost/app-constancia-obstetraV1.0/index.php?ruta=nuevPassword&codigo=' . $co, $template);
           $template = str_replace("{{year}}", date('Y'), $template);
-          $template = str_replace("{{operating_system}}", Helper::getOS(), $template);
-          $template = str_replace("{{browser_name}}", Helper::getBrowser(), $template);
+          $template = str_replace("{{operating_system}}", $sistemaop, $template);
+          $template = str_replace("{{browser_name}}", ControladorRegistro::getBrowser(), $template);
 
 
 
-
-          $EnviadoPor = "ymendieta@dirislimasur.gob.pe";
-          $NombreEnviado = "LIBRO DE RECLAMACIONES VIRUTAL";
-          $host = "smtp.gmail.com";
-          $port = 587;
-          $SMTPAuth = true;
-          $SMTSecure = "tls";
-          $password = "1597531994Vlad";
-
-          require "vistas/bower_components/PHPMailer/PHPMailerAutoload.php";
-
-          $mail = new PHPMailer();
-
-          $mail->isSMTP();
+          $formato = "html";
+          $cabeceras  = "From: reclamaciones<no-reply@dirislimasur.gob.pe> \r\n";
+          $cabeceras .= "Return-Path: <no-reply@dirislimasur.gob.pe> \r\n";
+          $cabeceras .= "Reply-To: no-reply@dirislimasur.gob.pe \r\n";
+          $cabeceras .= "Cc: no-reply@dirislimasur.gob.pe \r\n";
+          $cabeceras .= "Bcc: no-reply@dirislimasur.gob.pe \r\n";
+          $cabeceras .= "X-Sender: no-reply@dirislimasur.gob.pe \r\n";
+          $cabeceras .= "X-Mailer: [Habla software de noticias v.1.0] \r\n";
+          $cabeceras .= "X-Priority: 3 \r\n";
+          $cabeceras .= "MIME-Version: 1.0 \r\n";
+          $cabeceras .= "Content-Transfer-Encoding: 7bit \r\n";
+          $cabeceras .= "Disposition-Notification-To: \"reclamaciones\" <no-reply@dirislimasur.gob.pe> \r\n";
 
 
-          $mail->SMTPDebug = 0;
-          $mail->Host = $host;
-          $mail->Port = $port;
-          $mail->SMTPAuth = $SMTPAuth;
-          $mail->SMTPSecure = $SMTSecure;
-          $mail->Username = $EnviadoPor;
-          $mail->Password = $password;
-
-          $mail->setFrom($EnviadoPor, $NombreEnviado);
-
-          if (is_array($emailTo)) {
-            foreach ($emailTo as $key => $value) {
-              $mail->addAddress($value);
-            }
+          if ($formato == "html") {
+            $cabeceras .= "Content-Type: text/html; charset=iso-8859-1 \r\n";
           } else {
-            $mail->addAddress($emailTo);
+            $cabeceras .= "Content-Type: text/plain; charset=iso-8859-1 \r\n";
           }
-          /* $mail->addAddress($emailTo); */
 
+          mail($destino, $asunto, $template, $cabeceras);
 
-          $mail->isHTML(true);
-          $mail->Subject = $subject;
-
-          $mail->Body = $message;
-
-          if (!$mail->send()) {
-
-            echo '<script>console.log("ERROR AL ENVIAR MENSAJE");</script>';
-          }
-          echo '<script>console.log("MENSAJE ENVIADO");</script>';
-
-          if ($respuesta == "ok") {
-
-            echo '<script>
-
-					swal({
-
-						type: "success",
-						title: "¡El Reclamo N°- 0' . $num_reclamo . ' ha sido Generado!",
-						showConfirmButton: true,
-						confirmButtonText: "Cerrar"
-
-					}).then(function(result){
-
-						if(result.value){
-						
-							window.location = "https://libroreclamaciones.dirislimasur.gob.pe/";
-
-						}
-
-					});
-				
-
-					</script>';
-          } else {
-            echo '<script>
-
-					swal({
-
-						type: "success",
-						title: "¡Error, Contactar con el Administrador!",
-						showConfirmButton: true,
-						confirmButtonText: "Cerrar"
-
-					}).then(function(result){
-
-
-					});
-				
-
-					</script>';
-          }
+          echo "Metodo mail ejecutado";
         } else {
           echo '<script>
  
-          swal({
-              type: "error",
-              title: "Error al enviar correo, Contactar con el Administrador",
-              showConfirmButton: true,
-              confirmButtonText: "Cerrar"
-              }).then((result) => {
-              if (result.value) {
+                swal({
+                    type: "error",
+                    title: "Error al enviar correo, Contactar con el Administrador",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then((result) => {
+                    if (result.value) {
+        
+                    window.location = "";
+        
+                    }
+                  })
   
-              window.location = "restablecer";
-  
-              }
-            })
-  
-          </script>';
+                 </script>';
         }
       } else {
         echo '<script>
@@ -327,6 +386,63 @@ class ControladorRegistro
       }
     }
   }
+
+  static public function ctrNuevPassword()
+  {
+    if (isset($_GET["codigo"])) {
+      $valor = $_GET["codigo"];
+
+      $usuario = ControladorRegistro::ctrConsultaCodigo($valor);
+
+
+      if (empty($usuario["codigo"]) && empty($usuario["fecharecuperacion"]) && empty($usuario["idhabilidad"])) {
+
+        echo '<script>
+ 
+        swal({
+            type: "error",
+            title: "El código de recuperación de contraseña no es valido. Por favor intenta de nuevo.",
+            showConfirmButton: true,
+            confirmButtonText: "Cerrar"
+            }).then((result) => {
+            if (result.value) {
+
+            window.location = "login";
+
+            }
+          })
+
+         </script>';
+      } else {
+
+        $fechActual = date("Y-m-d H:i:s");
+        if (strtotime($fechActual) > strtotime($usuario["fecharecuperacion"])) {
+          echo '<script>
+ 
+        swal({
+            type: "error",
+            title: "El código de recuperación de contraseña ha expirado. Por favor intenta de nuevo.",
+            showConfirmButton: true,
+            confirmButtonText: "Cerrar"
+            }).then((result) => {
+            if (result.value) {
+
+            window.location = "login";
+
+            }
+          })
+
+         </script>';
+        } else {
+          $id = $usuario["idhabilidad"];
+        }
+      }
+    }
+
+    return $id;
+  }
+
+
 
   /* =============================================
       CREAR REGISTRO
@@ -443,6 +559,22 @@ class ControladorRegistro
              })
  
            </script>';
+      }
+    }
+  }
+
+
+  static public function ctrGenerarNuevContraseña()
+  {
+
+    if (isset($_POST["enviar"])) {
+      if (!empty($_POST["nuevPassword"]) && !empty($_POST["confirPassword"])) {
+
+        $nuevPassword = $_POST["nuevPassword"];
+        $confirPassword = $_POST["confirPassword"];
+         
+        
+
       }
     }
   }

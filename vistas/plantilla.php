@@ -177,7 +177,7 @@
     echo '</div>';
   } else if (isset($_GET["ruta"])) {
 
-    if ($_GET["ruta"] == "login" || $_GET["ruta"] == "registro-obstetra" || $_GET["ruta"] == "restablecer") {
+    if ($_GET["ruta"] == "login" || $_GET["ruta"] == "registro-obstetra" || $_GET["ruta"] == "restablecer" || $_GET["ruta"] == "nuevPassword") {
 
       include "modulos/" . $_GET["ruta"] . ".php";
     }

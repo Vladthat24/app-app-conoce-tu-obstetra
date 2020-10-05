@@ -36,7 +36,13 @@ class ModeloRegistro
         $stmt = null;
     }
 
-    static public function mdlRecuperarEmail($tabla, $item, $valor)
+
+    /* =============================================
+    MOSTRAR LOS DATOS DE HABILIDAD CODIGO Y FECHADERECUPERACION PARA 
+    VALIDAD EL GET DEL ENLACE DE RECUPERAR CONTRASEÑA 
+    ============================================= */
+
+    static public function mdlMostrarObstetraCodigo($tabla, $item, $valor)
     {
 
         if ($item != null) {
@@ -44,6 +50,28 @@ class ModeloRegistro
             $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY idhabilidad DESC");
 
             $stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
+
+            $stmt->execute();
+
+            return $stmt->fetch();
+        } else {
+            echo "ERROR EN LA CONSULTA - CONTACTAR CON EL ADMINISTRADOR";
+        }
+
+        $stmt->close();
+
+        $stmt = null;
+    }
+
+    static public function mdlRecuperarEmail($tabla, $item, $valor, $item2, $valor2)
+    {
+
+        if ($item != null) {
+
+            $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item  and $item2=:$item2 ORDER BY idhabilidad DESC");
+
+            $stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
+            $stmt->bindParam(":" . $item2, $valor2, PDO::PARAM_INT);
 
             $stmt->execute();
 
