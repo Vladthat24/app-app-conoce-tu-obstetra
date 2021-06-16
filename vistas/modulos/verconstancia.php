@@ -14,6 +14,7 @@
     }
 } else {
 } */
+
 $cop = $_SESSION["idobstetra"];
 $item = 'idobstetra';
 
@@ -25,6 +26,26 @@ $datoscompletos = $respuesta["nombre"] . " " . $respuesta["apellidos"];
 $n_cop = $respuesta["cop"];
 if (isset($datoscompletos) && isset($n_cop)) {
 }
+
+$dir = "tempqr/";
+
+if (!file_exists($dir)) {
+    mkdir($dir);
+}
+
+$filename = $dir . "test.png";
+
+$tam = 2;
+$level = 'L';
+$frameSize = 2;
+
+$contenido = "http://192.168.20.60:8085/app-constancia-obstetraV1.0/extensiones/tcpdf/pdf/constanciahabilidad.php?idObstetra=" . $cop;
+
+QRcode::png($contenido, $filename, $level, $tam, $frameSize);
+
+$qr = '<img src="' . $filename . '"/>';
+
+
 
 /* var_dump($cop); */
 
@@ -38,7 +59,7 @@ $a_o = strftime('%y');
 
 <style>
     td {
-        /* border: hidden; */
+        border: hidden;
     }
 </style>
 <html id="menu">
@@ -296,7 +317,7 @@ $a_o = strftime('%y');
                                                                                             <table cellspacing="0" cellpadding="0">
                                                                                                 <tbody>
                                                                                                     <tr>
-                                                                                                        <td style="text-align: center; WIDTH:187.82mm;min-width: 186.41mm;HEIGHT:10.48mm;">
+                                                                                                        <td style="text-align: center; WIDTH:187.82mm;min-width: 186.41mm;HEIGHT:12.48mm;">
                                                                                                             <div style="WIDTH:186.41mm;margin-left: 70px;font-size: 19px;">
                                                                                                                 <strong><?php echo $datoscompletos; ?></strong>
                                                                                                             </div>
@@ -356,11 +377,11 @@ $a_o = strftime('%y');
                                                                                     </tr>
 
                                                                                     <tr>
-                                                                                        <td style="HEIGHT:10.02mm;WIDTH:0.00mm">
+                                                                                        <td style="HEIGHT:8mm;WIDTH:0.00mm">
 
                                                                                         </td>
                                                                                         <td colspan="2"></td>
-                                                                                        <td colspan="5" style="HEIGHT:10.02mm;WIDTH:15.00mm"></td>
+                                                                                        <td colspan="5" style="HEIGHT:8mm;WIDTH:15.00mm"></td>
                                                                                         <td colspan="3">
                                                                                             <div style="text-align: center;font-style: italic;font-size: 14px;">
                                                                                                 <strong>PUEBLO LIBRE</strong>
@@ -379,7 +400,7 @@ $a_o = strftime('%y');
 
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td style="HEIGHT:8.02mm;WIDTH:0.00mm">
+                                                                                        <td style="HEIGHT:8mm;WIDTH:0.00mm">
 
                                                                                         </td>
 
@@ -398,12 +419,12 @@ $a_o = strftime('%y');
                                                                                         <td colspan="20"></td>
 
                                                                                     </tr>
-                                                                                    <tr>
+<!--                                                                                     <tr>
                                                                                         <td style="HEIGHT:8.02mm;WIDTH:0.00mm">
 
                                                                                         </td>
                                                                                         <td colspan="20"></td>
-                                                                                    </tr>
+                                                                                    </tr> -->
 
 
                                                                                     <tr valingn="top">
@@ -416,7 +437,7 @@ $a_o = strftime('%y');
                                                                                                         <td style="WIDTH:58.13mm;min-width: 56.71mm;HEIGHT:8.29mm;">
                                                                                                             <div style="WIDTH:56.71mm;">
                                                                                                                 <div>
-
+                                                                                                                <?php echo $qr; ?>
                                                                                                                 </div>
 
                                                                                                             </div>
@@ -445,14 +466,14 @@ $a_o = strftime('%y');
                                                                                         <td rowspan="3" colspan="2"></td>
 
                                                                                     </tr>
-                                                                                    <tr>
+       <!--                                                                              <tr>
                                                                                         <td style="HEIGHT:8.02mm;WIDTH:0.00mm">
 
                                                                                         </td>
                                                                                         <td colspan="5"></td>
                                                                                         <td rowspan="2" colspan="5"></td>
 
-                                                                                    </tr>
+                                                                                    </tr> -->
                                                                                     <tr>
                                                                                         <td style="HEIGHT:8.02mm;WIDTH:0.00mm">
 
@@ -487,13 +508,13 @@ $a_o = strftime('%y');
                                                                                         <td colspan="3"></td>
                                                                                     </tr>
                                                                                     <tr valingn="top">
-                                                                                        <td style="HEIGHT:0.21mm;WIDTH:0.00mm"></td>
+                                                                                        <td style="HEIGHT:1.21mm;WIDTH:0.00mm"></td>
                                                                                         <td rowspan="2" colspan="1"></td>
                                                                                         <td rowspan="1" colspan="7">
                                                                                             <table cellspacing="0" cellpadding="0">
                                                                                                 <tbody>
                                                                                                     <tr>
-                                                                                                        <td style="WIDTH:58.13mm;min-width: 56.71mm;HEIGHT:8.29mm;">
+                                                                                                        <td style="WIDTH:58.13mm;min-width: 56.71mm;HEIGHT:13.29mm;">
                                                                                                             <div style="WIDTH:56.71mm;">
                                                                                                                 <div style="font-style: italic;font-size: 14px;">
                                                                                                                     <span><strong>Mg. Margarita Perez Silva</strong></span>

@@ -158,15 +158,7 @@
       ) {
 
         include "modulos/" . $_GET["ruta"] . ".php";
-        
-
-
-      }else if($_GET["ruta"]=="constanciahabilidad"){
-
-        include "extensiones/tcpdf/pdf/".$_GET["ruta"].".php";
-      } 
-      
-      else {
+      } else {
 
         include "modulos/404.php";
       }
@@ -185,14 +177,15 @@
     echo '</div>';
   } else if (isset($_GET["ruta"])) {
 
-    if ($_GET["ruta"] == "login" || $_GET["ruta"] == "registro-obstetra" || $_GET["ruta"] == "restablecer" || $_GET["ruta"] == "nuevPassword") {
+    if (
+      $_GET["ruta"] == "login" ||
+      $_GET["ruta"] == "registro-obstetra" ||
+      $_GET["ruta"] == "restablecer" ||
+      $_GET["ruta"] == "nuevPassword" ||
+      $_GET["ruta"] == "constanciahabilidadonline"
+    ) {
 
       include "modulos/" . $_GET["ruta"] . ".php";
-      
-    }else if($_GET["ruta"]=="constanciahabilidad"){
-
-      include "extensiones/tcpdf/pdf/".$_GET["ruta"].".php";
-
     }
   } else {
 

@@ -1,16 +1,16 @@
 <?php
 
-require_once "../../../controladores/registro.controlador.php";
+/* require_once "../../../controladores/registro.controlador.php";
 require_once "../../../modelos/registro.modelo.php";
-require_once "../../phpqrcode/qrlib.php";
+require_once "../../phpqrcode/qrlib.php"; */
 
-
-class imprimirObstetra
+class imprimirObstetraOnline
 {
 
     public $idObstetra;
 
     public function traerImpresionObstetra()
+
     {
 
         //TRAEMOS LA INFORMACION DEL TICKET
@@ -26,13 +26,12 @@ class imprimirObstetra
 
         $filename = $dir . "test.png";
 
-        $tam = 1.5;
-        $level = 'L';
+        $tam = 2;
+        $level = 'M';
         $frameSize = 2;
-
         $contenido = "http://192.168.20.60:8085/app-constancia-obstetraV1.0/extensiones/tcpdf/pdf/constanciahabilidad.php?idObstetra=" . $valorObstetra;
 
-        /* $contenido = "http://192.168.20.60:8085/app-constancia-obstetraV1.0/constanciahabilidadonline?idObstetra=" . $valorObstetra; */
+        /*         $contenido = "http://192.168.20.60:8085/app-constancia-obstetraV1.0/index.php?ruta=constanciahabilidadonline&idObstetra=" . $valorObstetra; */
 
         QRcode::png($contenido, $filename, $level, $tam, $frameSize);
 
@@ -60,7 +59,7 @@ class imprimirObstetra
         $a_o_ = substr($a_o, 0);
 
         //---------------------------------------------------------------------------------------
-        require_once('./tcpdf_include.php');
+        require_once('extensiones/tcpdf/tcpdf.php');
 
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $pdf->startPageGroup();
@@ -78,14 +77,14 @@ class imprimirObstetra
         // add a page
         /*         $pdf->AddPage('P', 'A4'); */
 
-        $img_file = "images/formato.png";
+        $img_file = "extensiones/tcpdf/pdf/images/formato.png";
         $pdf->Image($img_file, 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
 
         $pdf->setPageMark();
 
 
         $bloque1 = <<<EOF
-        <table style="font-size:8px; padding:5px 10px;" border="0">
+        <table style="font-size:8px; padding:5px 10px;" border="1">
         <tr>
        
            <td>
@@ -318,8 +317,8 @@ class imprimirObstetra
                <strong>$dia_mes_</strong>
            </td>
            <td style="font-style: italic;font-size: 10px;width: 130px;">
-               <strong>$a_o_</strong>
-            </td>
+           <strong>$a_o_</strong>
+       </td>
        </tr>
        <tr>
            <td style="font-size:8px;width: 140px;text-align:center">
@@ -351,7 +350,7 @@ class imprimirObstetra
            </td>
        </tr>
        <tr>
-           <td style="font-size:8px;width: 180px;text-align:center;height:85px;">
+           <td style="font-size:8px;width: 180px;text-align:center">
            $qr 
            </td>
            <td style="font-size:8px;width: 180px;text-align:center">
@@ -363,36 +362,41 @@ class imprimirObstetra
                    
            </td>
        </tr>
-        <tr>
-            <td style="font-size:8px;width: 180px;text-align:center;">
-                    
-        
-            </td>
-            <td style="font-size:8px;width: 130px;text-align:center">
-                
-                
-            </td>
+    <tr>
+          
+       <td colspan="3" >
+          
+                       
+       </td>
+    </tr>
 
-            <td style="font-size:8px;width: 180px;text-align:center;HEIGHT:13.29mm;">
+   <tr>
+       <td style="font-size:8px;width: 180px;text-align:center;">
+             
+   
+       </td>
+       <td style="font-size:8px;width: 130px;text-align:center">
+         
+           
+       </td>
 
-                    <div style="font-style: italic;font-size: 10px;">
+       <td style="font-size:8px;width: 180px;text-align:center">
+        <div style="font-style: italic;font-size: 10px;">
+            <span><strong>Mg. Margarita Perez Silva</strong></span>
+         </div>
+   
+       </td>
+   </tr>
+   <tr>
+       <td style="font-size:8px;width: 200px;text-align:center">
 
-                        <span><strong>Mg. Margarita Perez Silva</strong></span>
-                         <span>Decana Nacional</span>
-                    </div>
-                    
-            </td>
-        </tr>
-        <tr>
-            <td style="font-size:8px;width: 200px;text-align:center">
+           
+       </td>
+       <td style="width: 340px;" colspan="2">
 
-                
-            </td>
-            <td style="width: 340px;" colspan="2">
-
-                        
-            </td>
-        </tr>
+                   
+       </td>
+   </tr>
     
 </table>
 EOF;
@@ -403,10 +407,13 @@ EOF;
 
         //******************************************************************
         //SALIDA DEL ARCHIVOS
-        $pdf->Output('printObstetra.pdf');
+
+
+        $pdf->Output('printObstetra.pdf', 'I');
     }
 }
 
-$obstetra = new imprimirObstetra();
+
+$obstetra = new imprimirObstetraOnline();
 $obstetra->idObstetra = $_GET["idObstetra"];
 $obstetra->traerImpresionObstetra();
