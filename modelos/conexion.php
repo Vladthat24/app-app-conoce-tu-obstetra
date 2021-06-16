@@ -19,7 +19,7 @@ class Conexion
 /* CONEXION CON LA BASE DE DATOS LOCAL - MYSQL */
 
 		$link = new PDO(
-			"mysql:host=localhost;dbname=dbobstetras",
+			"mysql:host=localhost;dbname=colegi30_dbobstetras",
 			"root",
 			"");
 		$link->exec("set names utf8");

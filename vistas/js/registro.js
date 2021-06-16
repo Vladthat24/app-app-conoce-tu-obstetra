@@ -13,7 +13,8 @@ $(document).ready(function() {
 
         var idObstetra = $(this).attr("idobstetra");
         console.log(idObstetra);
-        window.open("extensiones/tcpdf/pdf/constanciahabilidad.php?idObstetra=" + idObstetra, "_blank");
+     /*    window.open("constanciahabilidad?idObstetra=" + idObstetra, "_blank"); */
+        window.open("constanciahabilidad?idObstetra="+idObstetra,"_blank");
     })
 
 })

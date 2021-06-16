@@ -14,6 +14,7 @@ require_once "modelos/perfil.modelo.php";
 require_once "modelos/entidad.modelo.php";
 require_once "modelos/funcionario.modelo.php";
 require_once "modelos/registro.modelo.php";
+require_once "extensiones/phpqrcode/qrlib.php";
 
 $plantilla = new ControladorPlantilla();
 $plantilla -> ctrPlantilla();

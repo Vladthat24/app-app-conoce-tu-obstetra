@@ -1,8 +1,8 @@
 <?php
 
-require_once "../../../controladores/registro.controlador.php";
-require_once "../../../modelos/registro.modelo.php";
-
+/* require_once "../../../controladores/registro.controlador.php";
+require_once "../../../modelos/registro.modelo.php"; 
+require_once "../../phpqrcode/qrlib.php";*/
 
 
 class imprimirObstetra
@@ -12,10 +12,31 @@ class imprimirObstetra
 
     public function traerImpresionObstetra()
     {
-        //TRAEMOS LA INFORMACION DEL TICKET
+
+       //TRAEMOS LA INFORMACION DEL TICKET
         $item = "idobstetra";
         $valorObstetra = $this->idObstetra;
         $respuesta = ControladorRegistro::ctrMostrarObstetraInicio($item, $valorObstetra);
+
+        $dir ="tempqr/"; 
+
+        if(!file_exists($dir)){
+            mkdir($dir);
+        }
+    
+        $filename= $dir."test.png";
+    
+        $tam=2;
+        $level='M';
+        $frameSize =3;
+        $contenido="".$item;
+    
+        QRcode::png($contenido,$filename,$level,$tam,$frameSize);
+        
+        $qr='<img src="'.$filename.'"/>'; 
+
+
+
 
         $datoscompletos = $respuesta["nombre"] . " " . $respuesta["apellidos"];
 
@@ -61,7 +82,7 @@ class imprimirObstetra
 
 
         $bloque1 = <<<EOF
-        <table style="font-size:8px; padding:5px 10px;">
+        <table style="font-size:8px; padding:5px 10px;" border="1">
         <tr>
        
            <td>
@@ -309,17 +330,16 @@ class imprimirObstetra
            </td>
 
            <td style="font-size:8px;width: 180px;text-align:center">
-          
+                
            </td>
        </tr>
        <tr>
            <td style="font-size:8px;width: 180px;text-align:center">
-                 
+           
              
            </td>
            <td style="font-size:8px;width: 180px;text-align:center">
             
-               
            </td>
 
            <td style="font-size:8px;width: 180px;text-align:center">
@@ -329,7 +349,7 @@ class imprimirObstetra
        </tr>
        <tr>
            <td style="font-size:8px;width: 180px;text-align:center">
-             
+           $qr 
            </td>
            <td style="font-size:8px;width: 180px;text-align:center">
                  
@@ -337,19 +357,6 @@ class imprimirObstetra
            </td>
            <td style="font-size:8px;width: 180px;text-align:center">
         
-                   
-           </td>
-       </tr>
-
-       <tr>
-           <td style="font-size:8px;width: 180px;text-align:center">
-       
-           </td>
-           <td style="font-size:8px;width: 180px;text-align:center">
-                 
-           
-           </td>
-           <td style="font-size:8px;width: 180px;text-align:center"> 
                    
            </td>
        </tr>
@@ -361,14 +368,6 @@ class imprimirObstetra
        </td>
     </tr>
 
-    <tr>
-
-       <td colspan="2"style="height:25px;">
-
-                   
-       </td>
-
-   </tr>
    <tr>
        <td style="font-size:8px;width: 180px;text-align:center;">
              

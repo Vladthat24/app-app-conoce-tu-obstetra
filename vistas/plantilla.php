@@ -158,7 +158,15 @@
       ) {
 
         include "modulos/" . $_GET["ruta"] . ".php";
-      } else {
+        
+
+
+      }else if($_GET["ruta"]=="constanciahabilidad"){
+
+        include "extensiones/tcpdf/pdf/".$_GET["ruta"].".php";
+      } 
+      
+      else {
 
         include "modulos/404.php";
       }
@@ -180,6 +188,11 @@
     if ($_GET["ruta"] == "login" || $_GET["ruta"] == "registro-obstetra" || $_GET["ruta"] == "restablecer" || $_GET["ruta"] == "nuevPassword") {
 
       include "modulos/" . $_GET["ruta"] . ".php";
+      
+    }else if($_GET["ruta"]=="constanciahabilidad"){
+
+      include "extensiones/tcpdf/pdf/".$_GET["ruta"].".php";
+
     }
   } else {
 
