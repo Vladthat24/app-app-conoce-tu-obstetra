@@ -22,6 +22,7 @@ $item = 'idobstetra';
 $respuesta = ControladorRegistro::ctrMostrarObstetraInicio($item, $cop);
 
 $datoscompletos = $respuesta["nombre"] . " " . $respuesta["apellidos"];
+$cobhabilidad = $respuesta["cobhabilidad"];
 
 $n_cop = $respuesta["cop"];
 if (isset($datoscompletos) && isset($n_cop)) {
@@ -328,7 +329,7 @@ $a_o = strftime('%y');
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td style="HEIGHT:12.02mm;WIDTH:0.00mm">
+                                                                                        <td style="HEIGHT:10mm;WIDTH:0.00mm">
 
                                                                                         </td>
                                                                                         <td colspan="20"></td>
@@ -340,7 +341,7 @@ $a_o = strftime('%y');
                                                                                         </td>
                                                                                         <td colspan="5"></td>
                                                                                         <td colspan="2">
-                                                                                            <div style="font-size: 15px;letter-spacing: 0.25em;word-spacing: 0.25em;font-style: italic;">
+                                                                                            <div style="font-size: 15px;letter-spacing: 0.25em;word-spacing: 0.25em;font-style: italic;margin-left:50px;">
                                                                                                 <strong><?php echo $n_cop; ?></strong>
                                                                                             </div>
                                                                                         </td>
@@ -369,7 +370,7 @@ $a_o = strftime('%y');
 
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td style="HEIGHT:8.02mm;WIDTH:0.00mm">
+                                                                                        <td style="HEIGHT:10mm;WIDTH:0.00mm">
 
                                                                                         </td>
                                                                                         <td colspan="20"></td>
@@ -406,8 +407,8 @@ $a_o = strftime('%y');
 
                                                                                         <td colspan="7"></td>
                                                                                         <td colspan="4">
-                                                                                            <div style="margin-left: 35px;height: 10px;">
-                                                                                                HOLA
+                                                                                            <div style="margin-left: 25px;height: 10px;">
+                                                                                                <?php echo "HVP-".$cobhabilidad?>
                                                                                             </div>
                                                                                         </td>
                                                                                         <td colspan="9"></td>
@@ -419,7 +420,7 @@ $a_o = strftime('%y');
                                                                                         <td colspan="20"></td>
 
                                                                                     </tr>
-<!--                                                                                     <tr>
+                                                                                    <!--                                                                                     <tr>
                                                                                         <td style="HEIGHT:8.02mm;WIDTH:0.00mm">
 
                                                                                         </td>
@@ -437,7 +438,7 @@ $a_o = strftime('%y');
                                                                                                         <td style="WIDTH:58.13mm;min-width: 56.71mm;HEIGHT:8.29mm;">
                                                                                                             <div style="WIDTH:56.71mm;">
                                                                                                                 <div>
-                                                                                                                <?php echo $qr; ?>
+                                                                                                                    <?php echo $qr; ?>
                                                                                                                 </div>
 
                                                                                                             </div>
@@ -454,7 +455,7 @@ $a_o = strftime('%y');
                                                                                                         <td style="WIDTH:58.13mm;min-width: 56.71mm;HEIGHT:8.29mm;">
                                                                                                             <div style="WIDTH:56.71mm;">
                                                                                                                 <div>
-                                                                                                                    <span></span>
+                                                                                                                    <img src="vistas\img\plantilla\firmablackpng.png" width="100px;" style="display:block;margin-left: auto;margin-right: auto;">
                                                                                                                 </div>
 
                                                                                                             </div>
@@ -466,7 +467,7 @@ $a_o = strftime('%y');
                                                                                         <td rowspan="3" colspan="2"></td>
 
                                                                                     </tr>
-       <!--                                                                              <tr>
+                                                                                    <!--                                                                              <tr>
                                                                                         <td style="HEIGHT:8.02mm;WIDTH:0.00mm">
 
                                                                                         </td>
@@ -475,9 +476,7 @@ $a_o = strftime('%y');
 
                                                                                     </tr> -->
                                                                                     <tr>
-                                                                                        <td style="HEIGHT:8.02mm;WIDTH:0.00mm">
-
-                                                                                        </td>
+                                                                                        <td></td>
                                                                                         <td colspan="5"></td>
                                                                                         <td rowspan="2" colspan="5"></td>
 
@@ -496,7 +495,7 @@ $a_o = strftime('%y');
                                                                                                                     <span></span>
                                                                                                                 </div>
                                                                                                                 <div>
-                                                                                                                    <span> </span>
+                                                                                                                    <span></span>
                                                                                                                 </div>
 
                                                                                                             </div>
@@ -516,11 +515,19 @@ $a_o = strftime('%y');
                                                                                                     <tr>
                                                                                                         <td style="WIDTH:58.13mm;min-width: 56.71mm;HEIGHT:13.29mm;">
                                                                                                             <div style="WIDTH:56.71mm;">
-                                                                                                                <div style="font-style: italic;font-size: 14px;">
+
+
+                                                                                                                <div style="font-style: italic;font-size: 14px;text-align: center;margin-top: 12px;">
+
+
                                                                                                                     <span><strong>Mg. Margarita Perez Silva</strong></span>
+
                                                                                                                 </div>
-                                                                                                                <div style="font-style: italic;font-size: 14px;margin-left: 35px;">
+
+                                                                                                                <div style="font-style: italic;font-size: 14px;margin-left: 0px;text-align: center;">
+
                                                                                                                     <span>Decana Nacional</span>
+
                                                                                                                 </div>
 
                                                                                                             </div>

@@ -8,10 +8,10 @@ class Conexion
 
 		/* CONEXION CON EL HOSTING DIRIS LIMA SUR - MYSQL */
 
-/*  		$link = new PDO(
-			"mysql:host=localhost;dbname=dirislim_monitoreocovid19",
-			"dirislim_7rhm9W9W",
-			"VEDADWddlTECaEXj"
+/* 		$link = new PDO(
+			"mysql:host=localhost;dbname=colegi30_dbobstetras",
+			"colegi30_colegi30",
+			"20151597531994Vlad"
 		);
 		$link->exec("set names utf8");  */
 

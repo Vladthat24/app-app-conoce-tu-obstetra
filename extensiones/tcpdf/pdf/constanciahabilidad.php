@@ -36,12 +36,13 @@ class imprimirObstetra
 
         QRcode::png($contenido, $filename, $level, $tam, $frameSize);
 
-        $qr = '<img src="' . $filename . '"/>';
+        $qr = '<img src="' . $filename . '" />';
 
 
 
 
         $datoscompletos = $respuesta["nombre"] . " " . $respuesta["apellidos"];
+        $cobhabilidad = $respuesta["cobhabilidad"];
 
         $n_cop = $respuesta["cop"];
         if (isset($datoscompletos) && isset($n_cop)) {
@@ -259,7 +260,7 @@ class imprimirObstetra
                
                
            </td>
-           <td>
+           <td >
                
                
            </td>
@@ -267,7 +268,7 @@ class imprimirObstetra
        </tr>
        <tr>
            <td></td> 
-           <td >
+           <td>
                 <div style="WIDTH:186.41mm;margin-left: 70px;font-size: 14px;">
                     <strong>$datoscompletos_</strong>
                 </div>
@@ -322,13 +323,13 @@ class imprimirObstetra
             </td>
        </tr>
        <tr>
-           <td style="font-size:8px;width: 140px;text-align:center">
+           <td style="font-size:8px;width: 150px;text-align:center">
                  
                   
            </td>
-           <td style="font-size:10px;width: 80px;text-align:center">
+           <td style="font-size:10px;width: 100px;text-align:center;">
                
-               <strong>HOLA</strong>
+               <strong >HVP-$cobhabilidad</strong>
                
            </td>
 
@@ -350,17 +351,33 @@ class imprimirObstetra
           
            </td>
        </tr>
+
        <tr>
-           <td style="font-size:8px;width: 180px;text-align:center;height:85px;">
+           <td style="font-size:8px;width: 180px;text-align:center;height:10mm;">
            $qr 
            </td>
-           <td style="font-size:8px;width: 180px;text-align:center">
+           <td style="font-size:8px;width: 130px;text-align:center">
                  
            
            </td>
            <td style="font-size:8px;width: 180px;text-align:center">
-        
-                   
+                <table border="0">
+                    <tr>
+                        <td style="margin: bottom 0;"><img src="images/firmablackpng.png" width="80px;"></td>
+                        
+                    </tr>
+                    <tr>
+                        <td>  
+                            <div style="font-style: italic;font-size: 10px;">
+
+                                <span><strong>Mg. Margarita Perez Silva</strong></span>
+                                <span>Decana Nacional</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                
+
            </td>
        </tr>
         <tr>
@@ -373,13 +390,9 @@ class imprimirObstetra
                 
             </td>
 
-            <td style="font-size:8px;width: 180px;text-align:center;HEIGHT:13.29mm;">
+            <td style="font-size:8px;width: 180px;text-align:center;">
 
-                    <div style="font-style: italic;font-size: 10px;">
 
-                        <span><strong>Mg. Margarita Perez Silva</strong></span>
-                         <span>Decana Nacional</span>
-                    </div>
                     
             </td>
         </tr>

@@ -258,6 +258,10 @@ class ControladorUsuarios
         return $respuesta;
     }
 
+    /**
+     *   
+     **/
+
     static public function ctrMostrarUsuariosInformatico($item, $item2, $valor)
     {
 
@@ -268,6 +272,42 @@ class ControladorUsuarios
         return $respuesta;
     }
 
+    /**
+     * MOSTRAR COBHABILIDAD Y FECHA  
+     **/
+
+    static public function ctrMostrarCobhabilidad($valor)
+    {
+
+        $tabla = "habilidad";
+        $item = "idhabilidad";
+        $respuesta = ModeloUsuarios::mdlMostrarCodHabilidad($tabla, $item, $valor);
+
+        return $respuesta;
+    }
+    /**
+     * MOSTRAR EL MAXIMO VALOR DEL COBHABILIDAD
+     **/
+
+    static public function ctrMostrarMaxValorCobhabilidad()
+    {
+
+        $tabla = "habilidad";
+
+        $respuesta = ModeloUsuarios::mdlMostrarMaxValorCobHabilidad($tabla);
+
+        return $respuesta;
+    }
+    /**
+     * ACTUALIZAR HABILIDAD
+     */
+    static public function ctrActualizarHabilidad($item1, $valor1, $valor2)
+    {
+        $tabla = "habilidad";
+        $item2 = "idhabilidad";
+        $respuesta = ModeloUsuarios::mdlActualizarUsuario($tabla, $item1, $valor1, $item2, $valor2);
+        return $respuesta;
+    }
     /* =============================================
       EDITAR USUARIO
       ============================================= */

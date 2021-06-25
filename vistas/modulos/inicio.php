@@ -117,14 +117,17 @@
 
                 <form class="login-form" role="form" method="post" enctype="multipart/form-data" action="verconstancia">
                     <?php
+
                     $cop = $_SESSION["idobstetra"];
                     $item = 'idobstetra';
 
                     $respuesta = ControladorRegistro::ctrMostrarObstetraInicio($item, $cop);
+
                     $n_cop = $respuesta["cop"];
 
                     $nombre = $respuesta["nombre"];
                     $apellidos = $respuesta["apellidos"];
+
                     if (isset($nombre) && isset($apellidos)) {
                     }
 
@@ -133,24 +136,114 @@
                     date_default_timezone_set('America/Lima');
 
                     $fecha = date('d/m/Y');
-                    /* $hora = date('H:i:s A'); */
 
 
+                    /**
+                     * MOSTRAR EL COBHABILIDAD
+                     */
 
+                    $tablaCob = "habilidad";
+
+                    $mostrarCobhabilidad = ModeloUsuarios::mdlMostrarCodHabilidad($tablaCob, $item, $cop);
 
                     $date1 = new DateTime(date_create_from_format("d/m/Y", $fechacolegiatura)->format("d-m-Y"));
 
 
                     $date2 = new DateTime(date_create_from_format("d/m/Y", $fecha)->format("d-m-Y"));
-                    /* $fecha = $date2->format('d-m-Y'); */
-
-                    /* var_dump($date1, $date2); */
 
                     $diff = $date1->diff($date2);
 
+
+
+                    //ID de Habilidad
+                    $idhabilidad = $_SESSION["idhabilidad"];
+
+                    /**
+                     * Validar el estado login 
+                     */
+
+
+                    if ($_SESSION["estadologin"] == 0) {
+
+                        /**
+                         * Se actualiza el estado login de 0 a 1
+                         */
+
+                        $item1ELogin = "estadologin";
+                        $valor1ELogin = 1;
+
+                        $updateEstadoLogin = ControladorUsuarios::ctrActualizarHabilidad($item1ELogin, $valor1ELogin, $idhabilidad);
+
+                        /**
+                         * Se activa la fecha donde se asigna el codigo de habilitacion que 
+                         * durara 90 dias
+                         */
+                        $itemFCH = "fechacobhabilidad";
+                        $fechaFCH = date('d/m/Y');
+                        $updateFechaCobHabilidad = ControladorUsuarios::ctrActualizarHabilidad($itemFCH, $fechaFCH, $idhabilidad);
+
+
+                        $itemCobhabilidad = "cobhabilidad";
+                        $maxValorCobHabilidad = ControladorUsuarios::ctrMostrarMaxValorCobhabilidad();
+
+                        $valorMax = $maxValorCobHabilidad["cobhabilidad"];
+                        $cobhabilidad_number = number_format($valorMax) + 1;
+
+                        $updateCobhabilidad = ControladorUsuarios::ctrActualizarHabilidad($itemCobhabilidad, $cobhabilidad_number, $idhabilidad);
+
+                        if ($updateEstadoLogin !== "ok" && $updateFechaCobHabilidad !== "ok" && $updateCobhabilidad == "ok") {
+
+                            echo '<br><div class="alert alert-danger">Error al actualizar cob habilidad, vuelve a intentarlo</div>';
+                        }
+                    } else if ($_SESSION["estadologin"] == 1) {
+
+                        /**
+                         * Obtener la fecha de cob habilidad y ver si esta dentro de los 90 dias
+                         */
+                        $MostrarCobHabilidad = ControladorUsuarios::ctrMostrarCobhabilidad($idhabilidad);
+                        $fCH = $MostrarCobHabilidad["fechacobhabilidad"];
+                        $date1FechaCobHabilidad = new DateTime(date_create_from_format("d/m/Y", $fCH)->format("d-m-Y"));
+
+                        $rangoFechaCobHabilidad = $date1FechaCobHabilidad->diff($date2);
+
+                        if ($rangoFechaCobHabilidad->days >= 90) {
+                            /*echo '<br><div class="alert alert-danger">Es afuera de los 90 dias</div>'; */
+
+                            /**
+                             * Se activa la fecha donde se asigna el codigo de habilitacion que 
+                             * durara 90 dias
+                             */
+                            $itemFCH = "fechacobhabilidad";
+                            $fechaFCH = date('d/m/Y');
+                            $updateFechaCobHabilidad = ControladorUsuarios::ctrActualizarHabilidad($itemFCH, $fechaFCH, $idhabilidad);
+
+                            //Se asigna un nuevo codigo de habilidad que dura 90 dias
+                            $itemCobhabilidad = "cobhabilidad";
+                            $maxValorCobHabilidad = ControladorUsuarios::ctrMostrarMaxValorCobhabilidad();
+
+                            $valorMax = $maxValorCobHabilidad["cobhabilidad"];
+                            $cobhabilidad_number = number_format($valorMax) + 1;
+
+                            $updateCobhabilidad = ControladorUsuarios::ctrActualizarHabilidad($itemCobhabilidad, $cobhabilidad_number, $idhabilidad);
+
+                            if ($updateFechaCobHabilidad !== "ok" && $updateCobhabilidad == "ok") {
+
+                                echo '<br><div class="alert alert-danger">Error al actualizar cob habilidad, vuelve a intentarlo</div>';
+                            }
+                        } else {
+                            
+                            echo '<br><div class="alert alert-danger">Está dentro del rango de los 90 dias</div>';
+                        }
+                    }
+
+
+                    //CONDICIONAL PARA VALIDAR LOS 3 MESES
+
                     if ($diff->days >= 90) {
+
                         $estado = "No habilitado";
                     } else {
+
                         $estado = "Habilitado";
                     }
 

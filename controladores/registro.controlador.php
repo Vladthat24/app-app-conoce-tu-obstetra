@@ -65,6 +65,9 @@ class ControladorRegistro
           $_SESSION["dni"] = $respuesta["dni"];
           $_SESSION["email"] = $respuesta["email"];
           $_SESSION["fecha_colegiatura"] = $respuesta["fecha_colegiatura"];
+          $_SESSION["estadologin"] = $respuesta["estadologin"];
+          $_SESSION["idhabilidad"] = $respuesta["idhabilidad"];
+          $_SESSION["cobhabilidad"] = $respuesta["cobhabilidad"];
 
           /* =============================================
             REGISTRAR FECHA PARA SABER EL ÚLTIMO LOGIN
@@ -85,10 +88,12 @@ class ControladorRegistro
 
           $ultimoLogin = ModeloUsuarios::mdlActualizarUsuario($tabla, $item1, $valor1, $item2, $valor2);
 
+
+
           if ($ultimoLogin == "ok") {
 
             echo '<script>
-  
+
                        window.location = "inicio";
   
                     </script>';
@@ -443,7 +448,6 @@ class ControladorRegistro
   }
 
 
-
   /* =============================================
       CREAR REGISTRO
    ============================================= */
@@ -572,9 +576,6 @@ class ControladorRegistro
 
         $nuevPassword = $_POST["nuevPassword"];
         $confirPassword = $_POST["confirPassword"];
-         
-        
-
       }
     }
   }

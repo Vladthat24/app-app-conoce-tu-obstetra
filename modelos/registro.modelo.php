@@ -121,7 +121,7 @@ class ModeloRegistro
             $stmt = Conexion::conectar()->prepare("SELECT LPAD(habilidad.idobstetra,5,'0') as cop,
             registro.nombre as nombre,
             concat(registro.apellido_paterno,' ',registro.apellido_materno) as apellidos,
-            habilidad.fecha_colegiatura as fecha_colegiatura
+            habilidad.fecha_colegiatura as fecha_colegiatura,LPAD(habilidad.cobhabilidad,7,'0') as cobhabilidad
             FROM $tabla
             inner join registro 
             on habilidad.idobstetra=registro.cop WHERE $item = :$item ORDER BY cop DESC");
@@ -149,7 +149,7 @@ class ModeloRegistro
 
         if ($item != null) {
 
-            $stmt = Conexion::conectar()->prepare("SELECT idhabilidad,idobstetra,dni,email,password,fecha_colegiatura,fecha_registro FROM $tabla WHERE $item = :$item ORDER BY idhabilidad DESC");
+            $stmt = Conexion::conectar()->prepare("SELECT idhabilidad,idobstetra,dni,email,password,fecha_colegiatura,fecha_registro,estadologin,cobhabilidad FROM $tabla WHERE $item = :$item ORDER BY idhabilidad DESC");
 
             $stmt->bindParam(":" . $item, $valor, PDO::PARAM_INT);
 
