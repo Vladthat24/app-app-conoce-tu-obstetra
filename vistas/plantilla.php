@@ -182,7 +182,8 @@
       $_GET["ruta"] == "registro-obstetra" ||
       $_GET["ruta"] == "restablecer" ||
       $_GET["ruta"] == "nuevPassword" ||
-      $_GET["ruta"] == "constanciahabilidadonline"
+      $_GET["ruta"] == "constanciahabilidadonline"||
+      $_GET["ruta"] == "noautorizado"
     ) {
 
       include "modulos/" . $_GET["ruta"] . ".php";

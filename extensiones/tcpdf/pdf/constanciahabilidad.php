@@ -30,7 +30,7 @@ class imprimirObstetra
         $level = 'L';
         $frameSize = 2;
 
-        $contenido = "http://192.168.20.60:8085/app-constancia-obstetraV1.0/extensiones/tcpdf/pdf/constanciahabilidad.php?idObstetra=" . $valorObstetra;
+        $contenido = "http://192.168.1.4/app-constancia-obstetraV1.0/extensiones/tcpdf/pdf/constanciahabilidad.php?idObstetra=" . $valorObstetra;
 
         /* $contenido = "http://192.168.20.60:8085/app-constancia-obstetraV1.0/constanciahabilidadonline?idObstetra=" . $valorObstetra; */
 
@@ -269,7 +269,7 @@ class imprimirObstetra
        <tr>
            <td></td> 
            <td>
-                <div style="WIDTH:186.41mm;margin-left: 70px;font-size: 14px;">
+                <div style="WIDTH:186.41mm;margin-left: 70px;margin-top:0px;font-size: 14px;">
                     <strong>$datoscompletos_</strong>
                 </div>
                            
@@ -337,76 +337,51 @@ class imprimirObstetra
                 
            </td>
        </tr>
+
+       </table>
+
+<table border="0">
+<tbody>
        <tr>
-           <td style="font-size:8px;width: 180px;text-align:center">
-           
-             
-           </td>
-           <td style="font-size:8px;width: 180px;text-align:center">
+            <td style="width:25mm;height:11mm;"></td>
+            <td style="width:25mm;"></td>
+            <td style="width:25mm;"></td>
+            <td></td>
+            <td style="width:20mm;"></td>
+            <td></td>
+            <td></td>
+         
             
-           </td>
-
-           <td style="font-size:8px;width: 180px;text-align:center">
-             
-          
-           </td>
        </tr>
-
        <tr>
-           <td style="font-size:8px;width: 180px;text-align:center;height:10mm;">
-           $qr 
-           </td>
-           <td style="font-size:8px;width: 130px;text-align:center">
-                 
-           
-           </td>
-           <td style="font-size:8px;width: 180px;text-align:center">
-                <table border="0">
-                    <tr>
-                        <td style="margin: bottom 0;"><img src="images/firmablackpng.png" width="80px;"></td>
-                        
-                    </tr>
-                    <tr>
-                        <td>  
-                            <div style="font-style: italic;font-size: 10px;">
+            <td colspan="7"></td>
 
-                                <span><strong>Mg. Margarita Perez Silva</strong></span>
-                                <span>Decana Nacional</span>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-                
-
-           </td>
        </tr>
-        <tr>
-            <td style="font-size:8px;width: 180px;text-align:center;">
-                    
+            
+       <tr>
+            <td></td>
+            <td>$qr</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><img src="images/firmablackpng.png" style="margin: 0%;width:80px;"></td>
+            <td></td>
+            
+       </tr>
+       <tr>
+            <td></td>
+            <td></td>
+            <td></td> 
+            <td></td>
+
+            <td colspan="3" style="text-align:center;">
+                    <span style="font-style: italic;font-size: 10px;"><strong>Obstra. Margarita Perez Silva</strong></span><br>
+                    <span style="font-style: italic;font-size: 10px;">Decana Nacional</span>         
+            </td>
         
-            </td>
-            <td style="font-size:8px;width: 130px;text-align:center">
-                
-                
-            </td>
-
-            <td style="font-size:8px;width: 180px;text-align:center;">
-
-
-                    
-            </td>
-        </tr>
-        <tr>
-            <td style="font-size:8px;width: 200px;text-align:center">
-
-                
-            </td>
-            <td style="width: 340px;" colspan="2">
-
-                        
-            </td>
-        </tr>
-    
+            
+       </tr>
+   </tbody>
 </table>
 EOF;
         $pdf->writeHTML($bloque1, false, false, false, false, '');
@@ -420,6 +395,41 @@ EOF;
     }
 }
 
-$obstetra = new imprimirObstetra();
-$obstetra->idObstetra = $_GET["idObstetra"];
-$obstetra->traerImpresionObstetra();
+if (isset($_GET["idObstetra"])) {
+
+    //VALIDAR SI ESTA DENTRO DEL RANGO DE LOS 90 DIAS
+    $item = "cop";
+
+    $resp = ControladorRegistro::ctrMostrarObstetraInicio($item, $_GET["idObstetra"]);
+
+
+
+    $fechaColegiatura = $resp["fecha_colegiatura"];
+
+    date_default_timezone_set('America/Lima');
+
+    $fecha = date('d/m/Y');
+
+    $date1 = new DateTime(date_create_from_format("d/m/Y", $fechaColegiatura)->format("d-m-Y"));
+
+
+    $date2 = new DateTime(date_create_from_format("d/m/Y", $fecha)->format("d-m-Y"));
+
+
+    $diff = $date1->diff($date2);
+
+
+
+    if ($diff->days >= 90) {
+        echo '<script>
+                window.location.href="http://192.168.1.4/app-constancia-obstetraV1.0/index.php?ruta=noautorizado";
+
+              </script>';
+    } else {
+
+        $obstetra = new imprimirObstetra();
+
+        $obstetra->idObstetra = $_GET["idObstetra"];
+        $obstetra->traerImpresionObstetra();
+    }
+}

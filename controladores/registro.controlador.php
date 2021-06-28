@@ -57,50 +57,86 @@ class ControladorRegistro
 
         $respuesta = ModeloRegistro::mdlMostrarObstetraLogin($tabla, $item, $valor);
 
-        if ($respuesta["idobstetra"] == $_POST["username"] && $respuesta["password"] == $encriptar) {
+
+        //VALIDAR SI ESTA DENTRO DEL RANGO DE LOS 90 DIAS
+        $resp = ControladorRegistro::ctrMostrarObstetraInicio($item, $respuesta["idobstetra"]);
+
+        $fechaColegiatura = $resp["fecha_colegiatura"];
+
+        date_default_timezone_set('America/Lima');
+
+        $fecha = date('d/m/Y');
+
+        $date1 = new DateTime(date_create_from_format("d/m/Y", $fechaColegiatura)->format("d-m-Y"));
 
 
-          $_SESSION["iniciarSesion"] = "ok";
-          $_SESSION["idobstetra"] = $respuesta["idobstetra"];
-          $_SESSION["dni"] = $respuesta["dni"];
-          $_SESSION["email"] = $respuesta["email"];
-          $_SESSION["fecha_colegiatura"] = $respuesta["fecha_colegiatura"];
-          $_SESSION["estadologin"] = $respuesta["estadologin"];
-          $_SESSION["idhabilidad"] = $respuesta["idhabilidad"];
-          $_SESSION["cobhabilidad"] = $respuesta["cobhabilidad"];
+        $date2 = new DateTime(date_create_from_format("d/m/Y", $fecha)->format("d-m-Y"));
 
-          /* =============================================
+        $diff = $date1->diff($date2);
+
+        if ($diff->days >= 90) {
+
+          echo '<script>
+
+                  swal({
+                      type: "error",
+                      title: "¡Estimado Colegiado, tramitar su habilidad profesional en su colegio correspondiente.!<br> <strong>Muchas Gracias</strong>",
+                      showConfirmButton: true,
+                      confirmButtonText: "Cerrar"
+                      }).then(function(result){
+                      if (result.value) {
+        
+                      window.location = "login";
+        
+                      }
+                    })
+        
+               </script>';
+        } else {
+
+          if ($respuesta["idobstetra"] == $_POST["username"] && $respuesta["password"] == $encriptar) {
+
+
+            $_SESSION["iniciarSesion"] = "ok";
+            $_SESSION["idobstetra"] = $respuesta["idobstetra"];
+            $_SESSION["dni"] = $respuesta["dni"];
+            $_SESSION["email"] = $respuesta["email"];
+            $_SESSION["fecha_colegiatura"] = $respuesta["fecha_colegiatura"];
+            $_SESSION["estadologin"] = $respuesta["estadologin"];
+            $_SESSION["idhabilidad"] = $respuesta["idhabilidad"];
+            $_SESSION["cobhabilidad"] = $respuesta["cobhabilidad"];
+
+            /* =============================================
             REGISTRAR FECHA PARA SABER EL ÚLTIMO LOGIN
           ============================================= */
 
-          date_default_timezone_set('America/Bogota');
+            date_default_timezone_set('America/Bogota');
 
-          $fecha = date('Y-m-d');
-          $hora = date('H:i:s');
+            $fecha = date('Y-m-d');
+            $hora = date('H:i:s');
 
-          $fechaActual = $fecha . ' ' . $hora;
+            $fechaActual = $fecha . ' ' . $hora;
 
-          $item1 = "ultimo_login";
-          $valor1 = $fechaActual;
+            $item1 = "ultimo_login";
+            $valor1 = $fechaActual;
 
-          $item2 = "idhabilidad";
-          $valor2 = $respuesta["idhabilidad"];
+            $item2 = "idhabilidad";
+            $valor2 = $respuesta["idhabilidad"];
 
-          $ultimoLogin = ModeloUsuarios::mdlActualizarUsuario($tabla, $item1, $valor1, $item2, $valor2);
+            $ultimoLogin = ModeloUsuarios::mdlActualizarUsuario($tabla, $item1, $valor1, $item2, $valor2);
 
+            if ($ultimoLogin == "ok") {
 
-
-          if ($ultimoLogin == "ok") {
-
-            echo '<script>
-
-                       window.location = "inicio";
+              echo '<script>
   
+                         window.location = "inicio";
+    
                     </script>';
-          }
-        } else {
+            }
+          } else {
 
-          echo '<br><div class="alert alert-danger">Error al ingresar, vuelve a intentarlo</div>';
+            echo '<br><div class="alert alert-danger">Error al ingresar, vuelve a intentarlo</div>';
+          }
         }
       }
     }

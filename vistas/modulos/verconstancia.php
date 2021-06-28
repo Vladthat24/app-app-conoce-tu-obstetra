@@ -40,7 +40,7 @@ $tam = 2;
 $level = 'L';
 $frameSize = 2;
 
-$contenido = "http://192.168.20.60:8085/app-constancia-obstetraV1.0/extensiones/tcpdf/pdf/constanciahabilidad.php?idObstetra=" . $cop;
+$contenido = "http://192.168.1.4/app-constancia-obstetraV1.0/extensiones/tcpdf/pdf/constanciahabilidad.php?idObstetra=" . $cop;
 
 QRcode::png($contenido, $filename, $level, $tam, $frameSize);
 
@@ -334,7 +334,7 @@ $a_o = strftime('%y');
                                                                                         </td>
                                                                                         <td colspan="20"></td>
                                                                                     </tr>
-                                                                                    <tr valingn="top"></tr>
+
                                                                                     <tr>
                                                                                         <td style="HEIGHT:6.90mm;WIDTH:0.00mm">
 
@@ -382,7 +382,7 @@ $a_o = strftime('%y');
 
                                                                                         </td>
                                                                                         <td colspan="2"></td>
-                                                                                        <td colspan="5" style="HEIGHT:8mm;WIDTH:15.00mm"></td>
+                                                                                        <td colspan="5" style="HEIGHT:8mm;WIDTH:2.00mm"></td>
                                                                                         <td colspan="3">
                                                                                             <div style="text-align: center;font-style: italic;font-size: 14px;">
                                                                                                 <strong>PUEBLO LIBRE</strong>
@@ -394,7 +394,7 @@ $a_o = strftime('%y');
                                                                                             </div>
                                                                                         </td>
                                                                                         <td colspan="3">
-                                                                                            <div style="margin-left: 20px;font-style: italic;font-size: 19px;">
+                                                                                            <div style="margin-left: 0px;font-style: italic;font-size: 19px;">
                                                                                                 <strong><?php echo $a_o; ?></strong>
                                                                                             </div>
                                                                                         </td>
@@ -402,197 +402,89 @@ $a_o = strftime('%y');
                                                                                     </tr>
                                                                                     <tr>
                                                                                         <td style="HEIGHT:8mm;WIDTH:0.00mm">
-
                                                                                         </td>
 
                                                                                         <td colspan="7"></td>
                                                                                         <td colspan="4">
                                                                                             <div style="margin-left: 25px;height: 10px;">
-                                                                                                <?php echo "HVP-".$cobhabilidad?>
+                                                                                                <?php echo "HVP-" . $cobhabilidad ?>
                                                                                             </div>
                                                                                         </td>
                                                                                         <td colspan="9"></td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td style="HEIGHT:8.02mm;WIDTH:0.00mm">
+                                                                                        <td colspan="18" style="height: 14mm;"></td>
 
-                                                                                        </td>
-                                                                                        <td colspan="20"></td>
 
                                                                                     </tr>
-                                                                                    <!--                                                                                     <tr>
-                                                                                        <td style="HEIGHT:8.02mm;WIDTH:0.00mm">
 
-                                                                                        </td>
-                                                                                        <td colspan="20"></td>
-                                                                                    </tr> -->
-
-
-                                                                                    <tr valingn="top">
-                                                                                        <td style="HEIGHT:9.70mm;WIDTH:0.00mm"></td>
-                                                                                        <td rowspan="2" colspan="4"></td>
-                                                                                        <td colspan="5">
-                                                                                            <table cellspacing="0" cellpadding="0">
-                                                                                                <tbody>
-                                                                                                    <tr>
-                                                                                                        <td style="WIDTH:58.13mm;min-width: 56.71mm;HEIGHT:8.29mm;">
-                                                                                                            <div style="WIDTH:56.71mm;">
-                                                                                                                <div>
-                                                                                                                    <?php echo $qr; ?>
-                                                                                                                </div>
-
-                                                                                                            </div>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </tbody>
-                                                                                            </table>
-                                                                                        </td>
-                                                                                        <td rowspan="2" colspan="2"></td>
-                                                                                        <td colspan="5">
-                                                                                            <table cellspacing="0" cellpadding="0">
-                                                                                                <tbody>
-                                                                                                    <tr>
-                                                                                                        <td style="WIDTH:58.13mm;min-width: 56.71mm;HEIGHT:8.29mm;">
-                                                                                                            <div style="WIDTH:56.71mm;">
-                                                                                                                <div>
-                                                                                                                    <img src="vistas\img\plantilla\firmablackpng.png" width="100px;" style="display:block;margin-left: auto;margin-right: auto;">
-                                                                                                                </div>
-
-                                                                                                            </div>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </tbody>
-                                                                                            </table>
-                                                                                        </td>
-                                                                                        <td rowspan="3" colspan="2"></td>
-
-                                                                                    </tr>
-                                                                                    <!--                                                                              <tr>
-                                                                                        <td style="HEIGHT:8.02mm;WIDTH:0.00mm">
-
-                                                                                        </td>
-                                                                                        <td colspan="5"></td>
-                                                                                        <td rowspan="2" colspan="5"></td>
-
-                                                                                    </tr> -->
                                                                                     <tr>
+                                                                                        <td colspan="6"></td>
+                                                                                        <td><?php echo $qr; ?></td>
+                                                                                        <td colspan="6"></td>
+                                                                                        <td style="width: 25mm;">
+                                                                                            <img src="vistas\img\plantilla\firmablackpng.png" style="margin-bottom: 0%;">
+                                                                                        </td>
                                                                                         <td></td>
-                                                                                        <td colspan="5"></td>
-                                                                                        <td rowspan="2" colspan="5"></td>
-
-                                                                                    </tr>
-
-                                                                                    <tr valingn="top">
-                                                                                        <td style="HEIGHT:0.21mm;WIDTH:0.00mm"></td>
-                                                                                        <td rowspan="3" colspan="3"></td>
-                                                                                        <td rowspan="2" colspan="7">
-                                                                                            <table cellspacing="0" cellpadding="0">
-                                                                                                <tbody>
-                                                                                                    <tr>
-                                                                                                        <td style="WIDTH:58.13mm;min-width: 56.71mm;HEIGHT:8.29mm;">
-                                                                                                            <div style="WIDTH:56.71mm;">
-                                                                                                                <div>
-                                                                                                                    <span></span>
-                                                                                                                </div>
-                                                                                                                <div>
-                                                                                                                    <span></span>
-                                                                                                                </div>
-
-                                                                                                            </div>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </tbody>
-                                                                                            </table>
-                                                                                        </td>
-                                                                                        <td colspan="3"></td>
-                                                                                    </tr>
-                                                                                    <tr valingn="top">
-                                                                                        <td style="HEIGHT:1.21mm;WIDTH:0.00mm"></td>
-                                                                                        <td rowspan="2" colspan="1"></td>
-                                                                                        <td rowspan="1" colspan="7">
-                                                                                            <table cellspacing="0" cellpadding="0">
-                                                                                                <tbody>
-                                                                                                    <tr>
-                                                                                                        <td style="WIDTH:58.13mm;min-width: 56.71mm;HEIGHT:13.29mm;">
-                                                                                                            <div style="WIDTH:56.71mm;">
-
-
-                                                                                                                <div style="font-style: italic;font-size: 14px;text-align: center;margin-top: 12px;">
-
-
-                                                                                                                    <span><strong>Mg. Margarita Perez Silva</strong></span>
-
-                                                                                                                </div>
-
-                                                                                                                <div style="font-style: italic;font-size: 14px;margin-left: 0px;text-align: center;">
-
-                                                                                                                    <span>Decana Nacional</span>
-
-                                                                                                                </div>
-
-                                                                                                            </div>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </tbody>
-                                                                                            </table>
-                                                                                        </td>
-                                                                                        <td colspan="3"></td>
-                                                                                    </tr>
-
-                                                                                    <tr valingn="top"></tr>
-                                                                                    <tr>
-                                                                                        <td style="HEIGHT:8.02mm;WIDTH:0.00mm">
-
-                                                                                        </td>
-                                                                                        <td colspan="20"></td>
+                                                                                        <td></td>
+                                                                                        <td></td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td style="HEIGHT:8.02mm;WIDTH:0.00mm">
+                                                                                        <td colspan="12"></td>
 
+
+                                                                                        <td colspan="3">
+                                                                                            <div style="font-style: italic;font-size: 14px;text-align: center;">
+
+
+                                                                                                <span><strong>Obstra. Margarita Perez Silva</strong></span>
+
+                                                                                            </div>
+
+                                                                                            <div style="font-style: italic;font-size: 14px;margin-left: 0px;text-align: center;">
+
+                                                                                                <span>Decana Nacional</span>
+
+                                                                                            </div>
                                                                                         </td>
-                                                                                        <td colspan="20" style="HEIGHT:8.02mm;WIDTH:0.00mm"></td>
-
                                                                                     </tr>
-                                                                                    <!--                                                                                     <tr>
-                                                                                        <td style="HEIGHT:8.02mm;WIDTH:0.00mm">
-
-                                                                                        </td>
-
-
-                                                                                    </tr> -->
-
-
-
-                                                                                </tbody>
-                                                                            </table>
+                                                                                    <td>
+                                                                                    <td colspan="20" style="height: 15mm;"></td>
                                                                         </td>
-                                                                    </tr>
+
+
+
+
                                                                 </tbody>
                                                             </table>
-                                                        </div>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
-                            </div>
                         </td>
                     </tr>
-
-
                 </tbody>
-
             </table>
-        </form>
-        <div class="">
+    </div>
+    </div>
+    </div>
+    </td>
+    </tr>
 
-            <button class="btn btn-primary btn btn-lg btnImprimirObstetra" idobstetra=<?php echo $_SESSION["idobstetra"]; ?> style="margin-left: 320px;margin-top: 10px;background-color: #81172D;">Imprimir</button>
 
-        </div>
-        <div>
-            <a href="salir" class="btn btn-primary btn.imprimir" style="margin-left: 342px;margin-top: 2px;background-color: #81172D;">Salir</a>
-        </div>
+    </tbody>
+
+    </table>
+    </form>
+    <div class="">
+
+        <button class="btn btn-primary btn btn-lg btnImprimirObstetra" idobstetra=<?php echo $_SESSION["idobstetra"]; ?> style="margin-left: 320px;margin-top: 10px;background-color: #81172D;">Imprimir</button>
+
+    </div>
+    <div>
+        <a href="salir" class="btn btn-primary btn.imprimir" style="margin-left: 342px;margin-top: 2px;background-color: #81172D;">Salir</a>
+    </div>
 
 
 
