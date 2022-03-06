@@ -80,7 +80,7 @@ class ControladorRegistro
 
                   swal({
                       type: "error",
-                      title: "¡Estimado Colegiado, tramitar su habilidad profesional en su colegio correspondiente.!<br> <strong>Muchas Gracias</strong>",
+                      title: "¡Estimado Colegiado, tramitar su habilidad profesional en su colegio correspondiente.<br> <>Muchas Gracias!",
                       showConfirmButton: true,
                       confirmButtonText: "Cerrar"
                       }).then(function(result){
@@ -367,18 +367,17 @@ class ControladorRegistro
 
 
           $formato = "html";
-          $cabeceras  = "From: reclamaciones<no-reply@dirislimasur.gob.pe> \r\n";
-          $cabeceras .= "Return-Path: <no-reply@dirislimasur.gob.pe> \r\n";
-          $cabeceras .= "Reply-To: no-reply@dirislimasur.gob.pe \r\n";
-          $cabeceras .= "Cc: no-reply@dirislimasur.gob.pe \r\n";
-          $cabeceras .= "Bcc: no-reply@dirislimasur.gob.pe \r\n";
-          $cabeceras .= "X-Sender: no-reply@dirislimasur.gob.pe \r\n";
+          $cabeceras  = "From: webmaster<no-reply@colegiodeobstetras.com> \r\n";
+          $cabeceras .= "Return-Path: <no-reply@colegiodeobstetras.com> \r\n";
+          $cabeceras .= "Reply-To: no-reply@colegiodeobstetras.com \r\n";
+          $cabeceras .= "Cc: no-reply@colegiodeobstetras.com \r\n";
+          $cabeceras .= "Bcc: no-reply@colegiodeobstetras.com \r\n";
+          $cabeceras .= "X-Sender: no-reply@colegiodeobstetras.com \r\n";
           $cabeceras .= "X-Mailer: [Habla software de noticias v.1.0] \r\n";
           $cabeceras .= "X-Priority: 3 \r\n";
           $cabeceras .= "MIME-Version: 1.0 \r\n";
           $cabeceras .= "Content-Transfer-Encoding: 7bit \r\n";
-          $cabeceras .= "Disposition-Notification-To: \"reclamaciones\" <no-reply@dirislimasur.gob.pe> \r\n";
-
+          $cabeceras .= "Disposition-Notification-To: \"webmaster\" <no-reply@colegiodeobstetras.com> \r\n";
 
           if ($formato == "html") {
             $cabeceras .= "Content-Type: text/html; charset=iso-8859-1 \r\n";
@@ -386,9 +385,46 @@ class ControladorRegistro
             $cabeceras .= "Content-Type: text/plain; charset=iso-8859-1 \r\n";
           }
 
-          mail($destino, $asunto, $template, $cabeceras);
 
-          echo "Metodo mail ejecutado";
+          /**
+           * CODIGO PARA VALIDAR ENVIO DE CORREO
+           */
+
+          if (mail($destino, $asunto, $template, $cabeceras) == TRUE) {
+            echo '<script>
+ 
+            swal({
+                type: "success",
+                title: "Su correo fue enviado a : ' . $destino . '"
+                showConfirmButton: true,
+                confirmButtonText: "Cerrar"
+                }).then((result) => {
+                if (result.value) {
+    
+                window.location = "";
+    
+                }
+              })
+
+             </script>';
+          } else {
+            echo '<script>
+ 
+                    swal({
+                        type: "error",
+                        title: "No se envio el correo, Contactar con el WebMaster",
+                        showConfirmButton: true,
+                        confirmButtonText: "Cerrar"
+                        }).then((result) => {
+                        if (result.value) {
+            
+                        window.location = "";
+            
+                        }
+                      })
+
+                  </script>';
+          }
         } else {
           echo '<script>
  
@@ -607,11 +643,79 @@ class ControladorRegistro
   static public function ctrGenerarNuevContraseña()
   {
 
-    if (isset($_POST["enviar"])) {
+    if (isset($_POST["enviar"]) && isset($_POST["id"])) {
+
       if (!empty($_POST["nuevPassword"]) && !empty($_POST["confirPassword"])) {
 
         $nuevPassword = $_POST["nuevPassword"];
         $confirPassword = $_POST["confirPassword"];
+
+        if ($nuevPassword == $confirPassword) {
+
+          $encriptar = crypt($nuevPassword, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+
+          $tabla = "habilidad";
+          $item1 = "password";
+          $valor1 = $encriptar;
+          $item2 = "idhabilidad";
+          $valor2 = $_POST["id"];
+
+          $updatePassword = ModeloRegistro::mdlActualizarHabilidad($tabla, $item1, $valor1, $item2, $valor2);
+
+          if ($updatePassword == "ok") {
+
+            echo '<script>
+                  
+                        swal({
+                            type: "success",
+                            title: "Error con el insert",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+                            }).then((result) => {
+                                if (result.value) {
+
+                                window.location = "login";
+
+                                }
+                              })
+
+                </script>';
+          } else {
+            echo '<script>
+ 
+            swal({
+                type: "error",
+                title: "¡No se puedeo realizar el cambio de contraseña!",
+                showConfirmButton: true,
+                confirmButtonText: "Cerrar"
+                }).then((result) => {
+                if (result.value) {
+  
+                window.location = "login";
+  
+                }
+              })
+  
+            </script>';
+          }
+        } else {
+          echo '<script>
+ 
+           swal({
+               type: "error",
+               title: "¡Las contraseñas no son iguales!",
+               showConfirmButton: true,
+               confirmButtonText: "Cerrar"
+               }).then((result) => {
+               if (result.value) {
+ 
+               window.location = "login";
+ 
+               }
+             })
+ 
+           </script>';
+        }
       }
     }
   }

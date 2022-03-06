@@ -30,13 +30,13 @@ class imprimirObstetra
         $level = 'L';
         $frameSize = 2;
 
-        $contenido = "http://192.168.1.4/app-constancia-obstetraV1.0/extensiones/tcpdf/pdf/constanciahabilidad.php?idObstetra=" . $valorObstetra;
+        $contenido = "https://constanciahabilidad.colegiodeobstetras.com/extensiones/tcpdf/pdf/constanciahabilidad.php?idObstetra=" . $valorObstetra;
 
         /* $contenido = "http://192.168.20.60:8085/app-constancia-obstetraV1.0/constanciahabilidadonline?idObstetra=" . $valorObstetra; */
 
         QRcode::png($contenido, $filename, $level, $tam, $frameSize);
 
-        $qr = '<img src="' . $filename . '" />';
+        $qr = '<img src="' . $filename . '" style="width: 100px;"/>';
 
 
 
@@ -195,9 +195,10 @@ class imprimirObstetra
         </tr>
 
         <tr>
-           <td></td>  
-           <td colspan="2">
-               <div style="font-size: 13px;"><strong>COLEGIO DE OBSTETRAS DEL PERÚ</strong></div>
+     
+           <td style="width:75mm;"></td>
+           <td colspan="2" >
+               <div style="font-size: 13px;margin: left 100px;"><strong>DECANA/O NACIONAL DEL</strong></div>
                
            </td>
            <td></td>
@@ -205,20 +206,25 @@ class imprimirObstetra
 
        </tr>
        <tr>
-           <td colspan="2">
-                 
-               </td>
+  
+           <td style="width:62mm;"></td>
+           <td><div style="font-size: 13px;"><strong>COLEGIO DE OBSTETRAS DEL PERÚ</strong></div></td>
            <td></td>
 
        </tr>
-       
-       <tr>
-           <td colspan="2">
-           
-                       
-               </td>
-           <td></td>
 
+       </table>
+
+       <table style="font-size:8px; padding:5px 10px;" border="0"> 
+       <tr>
+           <td style="width: 170px">
+           
+               
+           </td>
+             <td style="width: 370px">
+              
+               
+            </td>
        </tr>
        <tr>
        
@@ -247,16 +253,9 @@ class imprimirObstetra
            </td>
 
        </tr>
+
        <tr>
-       
-           <td colspan="2">
-               
-               
-           </td>
-           <td></td>
-       </tr>
-       <tr>
-           <td>
+           <td style="height:11.5mm;">
                
                
            </td>
@@ -355,22 +354,28 @@ class imprimirObstetra
        </tr>
        <tr>
             <td colspan="7"></td>
-
+ 
        </tr>
             
        <tr>
             <td></td>
-            <td>$qr</td>
+            <td rowspan="2" style="width: 70px;">
+            <br>
+            <br>
+            <br>
+           
+            $qr
+            </td>
             <td></td>
             <td></td>
-            <td></td>
-            <td><img src="images/firmablackpng.png" style="margin: 0%;width:80px;"></td>
+            <td><img src="images/sello_xio_original.PNG" style="width:50px;"></td>
+            <td><img src="images/firma_xio.png" style="margin: 0%;width:80px;"></td>
             <td></td>
             
        </tr>
        <tr>
             <td></td>
-            <td></td>
+            
             <td></td> 
             <td></td>
 

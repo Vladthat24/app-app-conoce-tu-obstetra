@@ -344,8 +344,6 @@ MODAL AGREGAR USUARIO
                                     <option value="2">2</option>
                                     <option value="3">3</option>
                                     <option value="4">4</option>
-                                    <option value="4(Palomar N°1)">4(Palomar N°1)</option>
-                                    <option value="5(Palomar N°2)">5(Palomar N°2)</option>
 
                                 </select>
                             </div>

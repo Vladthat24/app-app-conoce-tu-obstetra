@@ -536,7 +536,7 @@ $id = $nuevPassword->ctrNuevPassword();
                     <span class="focus-input100" data-placeholder="NUEVA CONTRASEÑA"></span>
 
                 </div>
-                <input class="hidden" type="text" value="<?php echo $id; ?>">
+                <input class="hidden" type="text" value="<?php echo $id; ?>" name="id">
                 <br>
                 <div class="wrap-input100 validate-input m-b-50" data-validate="ingresa Confirmar Contraseña">
                     <input class="input100" id="confirPassword" type="password" name="confirPassword">

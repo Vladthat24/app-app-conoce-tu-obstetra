@@ -40,11 +40,11 @@ $tam = 2;
 $level = 'L';
 $frameSize = 2;
 
-$contenido = "http://192.168.1.4/app-constancia-obstetraV1.0/extensiones/tcpdf/pdf/constanciahabilidad.php?idObstetra=" . $cop;
+$contenido = "https://constanciahabilidad.colegiodeobstetras.com/extensiones/tcpdf/pdf/constanciahabilidad.php?idObstetra=" . $cop;
 
 QRcode::png($contenido, $filename, $level, $tam, $frameSize);
 
-$qr = '<img src="' . $filename . '"/>';
+$qr = '<img src="' . $filename . '" style="width: 100px;"/>';
 
 
 
@@ -60,7 +60,7 @@ $a_o = strftime('%y');
 
 <style>
     td {
-        border: hidden;
+         border: hidden;
     }
 </style>
 <html id="menu">
@@ -205,10 +205,10 @@ $a_o = strftime('%y');
                                                                                     </tr>
                                                                                     <tr></tr>
                                                                                     <tr>
-                                                                                        <td style="HEIGHT:3.23mm;WIDTH:0.00mm"></td>
+                                                                                        <td style="HEIGHT:9.23mm;WIDTH:0.00mm"></td>
                                                                                         <td colspan="8"></td>
                                                                                     </tr>
-                                                                                    <tr valingn="top">
+                                                                                    <!-- <tr valingn="top">
                                                                                         <td style="HEIGHT:7.59mm;WIDTH:0.00mm"></td>
                                                                                         <td colspan="7">
                                                                                             <table cellspacing="0" cellpadding="0">
@@ -223,32 +223,41 @@ $a_o = strftime('%y');
                                                                                                 </tbody>
                                                                                             </table>
                                                                                         </td>
-                                                                                        <td rowspan="2" colspan="7">
-                                                                                            <div style="text-align: center;font-size: 20px;"> <strong>COLEGIO DE OBSTETRAS DEL PERÚ</strong></div>
+                                                                                        <td colspan="7">
+                                                                                             <div style="text-align: center;font-size: 20px;"> <strong>COLEGIO DE OBSTETRAS DEL PERÚ</strong></div>
+                                                                                        </td>
+                                                                                    </tr> -->
+                                                                                    <tr>
+                                                                                        <td style="HEIGHT:8.72mm;WIDTH:0.00mm"></td>
+                                                                                        <td colspan="7" style="width: 60mm;"></td>
+                                                                                        <td colspan="6">
+                                                                                            <div style="text-align: center;font-size: 20px;"> <strong>DECANA/O NACIONAL DEL</strong></div>
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td style="HEIGHT:10.72mm;WIDTH:0.00mm"></td>
-                                                                                        <td colspan="7">
+                                                                                        <td style="HEIGHT:8.72mm;WIDTH:0.00mm"></td>
+                                                                                        <td colspan="7" style="width: 60mm;"></td>
+                                                                                        <td colspan="6">
+                                                                                            <div style="text-align: center;font-size: 20px;"> <strong>COLEGIO DE OBSTETRAS DEL PERÚ</strong></div>
+                                                                                        </td>
                                                                                     </tr>
-                                                                                    <tr valingn="top">
+                                                                                    <!-- <tr valingn="top">
                                                                                         <td style="HEIGHT:7.59mm;WIDTH:0.00mm"></td>
                                                                                         <td colspan="20">
-                                                                                            <table cellspacing="0" cellpadding="0">
+                                                                                            <table cellspacing="0" cellpadding="0"> 
                                                                                                 <tbody>
                                                                                                     <tr>
                                                                                                         <td style="text-align: center; WIDTH:187.82mm;min-width: 186.41mm;HEIGHT:6.44mm;">
-                                                                                                            <div style="WIDTH:186.41mm;">
-
-                                                                                                            </div>
+                                                                                                        <div style="text-align: center;font-size: 20px;"> <strong>COLEGIO DE OBSTETRA DEL PERÚ</strong></div>
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </tbody>
                                                                                             </table>
                                                                                         </td>
-                                                                                    </tr>
+                                                                                        
+                                                                                    </tr> -->
                                                                                     <tr>
-                                                                                        <td style="HEIGHT:8.02mm;WIDTH:0.00mm">
+                                                                                        <td style="HEIGHT:10.02mm;WIDTH:0.00mm">
 
                                                                                         </td>
                                                                                         <td colspan="20"></td>
@@ -336,7 +345,7 @@ $a_o = strftime('%y');
                                                                                     </tr>
 
                                                                                     <tr>
-                                                                                        <td style="HEIGHT:6.90mm;WIDTH:0.00mm">
+                                                                                        <td style="HEIGHT:7.90mm;WIDTH:0.00mm">
 
                                                                                         </td>
                                                                                         <td colspan="5"></td>
@@ -401,7 +410,7 @@ $a_o = strftime('%y');
 
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td style="HEIGHT:8mm;WIDTH:0.00mm">
+                                                                                        <td style="HEIGHT:9mm;WIDTH:0.00mm">
                                                                                         </td>
 
                                                                                         <td colspan="7"></td>
@@ -413,26 +422,38 @@ $a_o = strftime('%y');
                                                                                         <td colspan="9"></td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td colspan="18" style="height: 14mm;"></td>
+                                                                                        <td colspan="18" style="height: 10mm;"></td>
 
 
                                                                                     </tr>
 
                                                                                     <tr>
                                                                                         <td colspan="6"></td>
-                                                                                        <td><?php echo $qr; ?></td>
-                                                                                        <td colspan="6"></td>
-                                                                                        <td style="width: 25mm;">
-                                                                                            <img src="vistas\img\plantilla\firmablackpng.png" style="margin-bottom: 0%;">
+                                                                                        <td rowspan="2" style="width: 100px;">
+                                                                                            <?php echo $qr; ?>
                                                                                         </td>
-                                                                                        <td></td>
-                                                                                        <td></td>
-                                                                                        <td></td>
+
+                                                                                        <!-- <td colspan="6" style="width: 80mm;"></td> -->
+                                                                                        <td colspan="4"></td>
+
+                                                                                        <td>
+                                                                                            <img src="vistas\img\plantilla\sello_xio_original.PNG" style="width: 20mm;">
+                                                                                        </td>
+
+                                                                                        <td colspan="3">
+                                                                                            <img src="vistas\img\plantilla\firma_xio.png" style="margin-bottom: 0%;width: 27mm;margin-left: 10mm;">
+                                                                                        </td>
+
+
+
+
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td colspan="12"></td>
+                                                                                        <td style="HEIGHT:15mm;WIDTH:5.00mm">
+                                                                                        </td>
+                                                                                        <td colspan="5"></td>
 
-
+                                                                                        <td colspan="5"></td>
                                                                                         <td colspan="3">
                                                                                             <div style="font-style: italic;font-size: 14px;text-align: center;">
 
